@@ -1,0 +1,10 @@
+.section {
+    padding: var(--section-spacing) 0;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 3rem 0;
+    }
+}

@@ -1,0 +1,99 @@
+.aboutContent {
+  font-size: 1.1rem;
+  color: var(--secondary-foreground);
+  max-width: 800px;
+}
+
+.text {
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.education {
+  margin-top: 3rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.education h3 {
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.eduItem {
+  margin-bottom: 2rem;
+}
+
+.eduHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.degree {
+  color: var(--primary);
+}
+
+.year {
+  color: var(--secondary-foreground);
+}
+
+.school {
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.eduDetails {
+  list-style-position: inside;
+  font-size: 0.95rem;
+}
+
+.darkSection {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.subHeading {
+  font-size: 1.5rem;
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  font-family: var(--font-heading);
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+}
+
+.contactContainer {
+  text-align: center;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  color: var(--secondary-foreground);
+}
+
+/* Button style needs to be available here too or global */
+:global(.primaryBtn) {
+  padding: 0.8rem 2rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1px solid var(--primary);
+  transition: all var(--transition-fast);
+  display: inline-block;
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+:global(.primaryBtn):hover {
+  background: transparent;
+  color: var(--primary);
+}

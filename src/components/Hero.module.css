@@ -1,0 +1,122 @@
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 60px;
+    /* Offset for navbar */
+}
+
+.heroContainer {
+    position: relative;
+    z-index: 2;
+}
+
+.content {
+    max-width: 600px;
+}
+
+.greeting {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.name {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    color: var(--foreground);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.summary {
+    font-size: 1.1rem;
+    color: var(--secondary-foreground);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.primaryBtn,
+.secondaryBtn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.primaryBtn {
+    background: var(--primary);
+    color: white;
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.primaryBtn:hover {
+    background: transparent;
+    color: var(--primary);
+}
+
+.secondaryBtn {
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid var(--border);
+}
+
+.secondaryBtn:hover {
+    background: var(--secondary);
+    border-color: var(--foreground);
+}
+
+.backgroundGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .name {
+        font-size: 3rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .hero {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .heroContainer {
+        display: flex;
+        justify-content: center;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+}

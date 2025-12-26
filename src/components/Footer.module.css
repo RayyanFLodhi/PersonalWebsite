@@ -1,0 +1,47 @@
+.footer {
+    border-top: 1px solid var(--border);
+    padding: 4rem 0 2rem;
+    background: var(--background);
+    margin-top: 4rem;
+}
+
+.footerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+}
+
+.name {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    color: var(--secondary-foreground);
+    font-size: 0.9rem;
+}
+
+.links {
+    display: flex;
+    gap: 2rem;
+}
+
+.link {
+    color: var(--secondary-foreground);
+    transition: color var(--transition-fast);
+}
+
+.link:hover {
+    color: var(--primary);
+}
+
+.copyright {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: var(--secondary-foreground);
+    opacity: 0.6;
+}

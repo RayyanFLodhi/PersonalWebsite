@@ -1,0 +1,61 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 0;
+    z-index: 1000;
+    transition: all var(--transition-medium);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+}
+
+.scrolled {
+    padding: 1rem 0;
+    background: rgba(10, 10, 10, 0.8);
+    border-bottom: 1px solid var(--border);
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+    transition: color var(--transition-fast);
+}
+
+.logo:hover {
+    color: var(--primary);
+}
+
+.navLinks {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.navLink {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--secondary-foreground);
+    transition: color var(--transition-fast);
+    position: relative;
+}
+
+.navLink:hover {
+    color: var(--foreground);
+}
+
+/* Mobile responsive styles can be added here */
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+        /* For simplicity in MVP, or add hamburger menu */
+    }
+}
