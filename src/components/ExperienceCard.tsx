@@ -4,19 +4,41 @@ import { Experience } from '@/data/resumeData';
 
 interface ExperienceCardProps {
     experience: Experience;
+    onClick?: () => void;
 }
 
-const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
+const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, onClick }) => {
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={onClick}>
             <div className={styles.header}>
-                <div>
-                    <h3 className={styles.role}>{experience.role}</h3>
+                {experience.logo && (
+                    <div className={styles.logoContainer}>
+                        <img
+                            src={experience.logo}
+                            alt={`${experience.company} logo`}
+                            className={styles.logo}
+                        />
+                    </div>
+                )}
+                <div className={styles.headerContent}>
+                    <div className={styles.titleRow}>
+                        <h3 className={styles.role}>{experience.role}</h3>
+                        {experience.website && (
+                            <a
+                                href={experience.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.websiteLink}
+                            >
+                                Visit
+                            </a>
+                        )}
+                    </div>
                     <h4 className={styles.company}>{experience.company}</h4>
-                </div>
-                <div className={styles.meta}>
-                    <span className={styles.date}>{experience.period}</span>
-                    <span className={styles.location}>{experience.location}</span>
+                    <div className={styles.meta}>
+                        <span className={styles.date}>{experience.period}</span>
+                        <span className={styles.location}>{experience.location}</span>
+                    </div>
                 </div>
             </div>
             <ul className={styles.description}>

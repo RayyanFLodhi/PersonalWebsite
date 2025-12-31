@@ -1,3 +1,5 @@
+/* ExperienceCard.module.css */
+
 .card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
@@ -5,6 +7,7 @@
     padding: 2rem;
     margin-bottom: 2rem;
     transition: transform var(--transition-fast), border-color var(--transition-fast);
+    cursor: pointer;
 }
 
 .card:hover {
@@ -15,9 +18,41 @@
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 1.5rem;
+    gap: 1.5rem;
+}
+
+.logoContainer {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: white;
+    /* Ensure logos are visible if transparent */
+    border-radius: 12px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.headerContent {
+    flex-grow: 1;
+}
+
+.titleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -26,26 +61,42 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--foreground);
-    margin-bottom: 0.25rem;
+    margin: 0;
 }
 
 .company {
     font-size: 1.1rem;
     color: var(--primary);
+    margin: 0;
+    margin-bottom: 0.5rem;
 }
 
 .meta {
-    text-align: right;
     font-size: 0.9rem;
     color: var(--secondary-foreground);
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    gap: 1rem;
+}
+
+.websiteLink {
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-decoration: none;
+    border: 1px solid var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.websiteLink:hover {
+    background: var(--primary);
+    color: var(--background);
 }
 
 .description {
     list-style-position: inside;
     color: var(--secondary-foreground);
+    margin-top: 1rem;
 }
 
 .description li {
@@ -53,7 +104,6 @@
     line-height: 1.6;
 }
 
-/* Custom bullet points could be added for more flair */
 .description li::marker {
     color: var(--primary);
 }
@@ -64,8 +114,14 @@
         align-items: flex-start;
     }
 
+    .titleRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
     .meta {
-        text-align: left;
-        margin-top: 0.5rem;
+        flex-direction: column;
+        gap: 0.25rem;
     }
 }

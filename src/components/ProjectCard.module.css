@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     transition: all var(--transition-fast);
+    cursor: pointer;
 }
 
 .card:hover {
@@ -55,6 +56,8 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: auto;
+    margin-bottom: 1rem;
+    /* Added spacing if image exists */
 }
 
 .tag {
@@ -64,4 +67,20 @@
     border-radius: 100px;
     color: var(--foreground);
     border: 1px solid var(--border);
+}
+
+.imageContainer {
+    margin-top: auto;
+    /* Pushes to bottom if tags aren't there/enough to fill */
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.projectImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
 }

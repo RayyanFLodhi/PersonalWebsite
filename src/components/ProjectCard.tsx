@@ -4,11 +4,12 @@ import { Project } from '@/data/resumeData';
 
 interface ProjectCardProps {
     project: Project;
+    onClick?: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={onClick}>
             <div className={styles.header}>
                 <h3 className={styles.title}>{project.title}</h3>
                 <span className={styles.role}>{project.role}</span>
@@ -27,6 +28,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                     {project.techCheck.map((tech) => (
                         <span key={tech} className={styles.tag}>{tech}</span>
                     ))}
+                </div>
+            )}
+            {project.image && (
+                <div className={styles.imageContainer}>
+                    <img src={project.image} alt={`${project.title} preview`} className={styles.projectImage} />
                 </div>
             )}
         </div>
