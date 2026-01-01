@@ -109,14 +109,15 @@
 }
 
 .secondaryBtn {
-    background: transparent;
-    color: var(--foreground);
-    border: 1px solid var(--border);
+    background: white;
+    color: #000;
+    border: 1px solid white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .secondaryBtn:hover {
-    background: var(--secondary);
-    border-color: var(--foreground);
+    background: transparent;
+    color: white;
 }
 
 .backgroundGlow {

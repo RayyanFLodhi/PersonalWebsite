@@ -151,6 +151,23 @@ export const resumeData = {
       ]
     }
   ],
+  projects: [
+    {
+      title: "LockSmith.AI",
+      role: "ML Engineer & Backend Developer",
+      location: "Ottawa, Ontario",
+      period: "January 2024",
+      image: "/placeholder-project.png",
+      description: [
+        "Built a password strength detector at UottaHack 7 to help users understand and improve their password security",
+        "Developed Random Forest machine learning algorithm to analyze password strength with robust accuracy",
+        "Implemented Flask backend to handle functionality and integrate all features seamlessly",
+        "Integrated Groq API to provide secondary password strength ratings and generate stronger password suggestions",
+        "Included data breach checker to verify if user credentials have been compromised"
+      ],
+      techCheck: ["Python", "Flask", "Machine Learning", "Random Forest", "Groq API", "Cybersecurity"]
+    }
+  ],
   leadership: [], // Deprecated, strictly using categories below
   highSchoolInitiatives: [
     {

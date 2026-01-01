@@ -93,22 +93,46 @@ export default function Home() {
       <Hero />
 
       <Section id="about" title="About">
-        <div className={styles.aboutContent}>
-          <p className={styles.text}>{resumeData.summary}</p>
-          <div className={styles.education}>
-            <h3>Education</h3>
-            {resumeData.education.map((edu, idx) => (
-              <div key={idx} className={styles.eduItem}>
-                <div className={styles.eduHeader}>
-                  <span className={styles.degree}>{edu.degree}</span>
-                  <span className={styles.year}>{edu.period}</span>
+        <div className={styles.aboutContainer}>
+          <div className={styles.aboutPhotos}>
+            <div className={styles.photoWrapper}>
+              <img src="/profile-1.png" alt="Rayyan Lodhi" className={styles.photo1} />
+            </div>
+            <div className={styles.photoWrapper}>
+              <img src="/profile-2.png" alt="Rayyan Lodhi" className={styles.photo2} />
+            </div>
+          </div>
+
+          <div className={styles.aboutContent}>
+            <div className={styles.introSection}>
+              <h3 className={styles.introHeading}>Nice to meet you!</h3>
+              <p className={styles.introText}>
+                I'm a passionate Computer Engineering student who loves building things that make a difference.
+                From developing AI-powered applications to teaching robotics to young students, I'm always looking
+                for ways to combine technology with real-world impact.
+              </p>
+            </div>
+
+            <div className={styles.backgroundSection}>
+              <h3 className={styles.sectionHeading}>Background</h3>
+              <p className={styles.text}>{resumeData.summary}</p>
+            </div>
+
+            <div className={styles.education}>
+              <h3 className={styles.sectionHeading}>Education</h3>
+              {resumeData.education.map((edu, idx) => (
+                <div key={idx} className={styles.eduItem}>
+                  <div className={styles.eduHeader}>
+                    <span className={styles.degree}>{edu.degree}</span>
+                    <span className={styles.year}>{edu.period}</span>
+                  </div>
+                  <div className={styles.school}>{edu.school}, {edu.location}</div>
+                  <ul className={styles.eduDetails}>
+                    {edu.details.map((d, i) => <li key={i}>{d}</li>)}
+                  </ul>
                 </div>
-                <div className={styles.school}>{edu.school}, {edu.location}</div>
-                <ul className={styles.eduDetails}>
-                  {edu.details.map((d, i) => <li key={i}>{d}</li>)}
-                </ul>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </Section>
@@ -120,6 +144,18 @@ export default function Home() {
               key={index}
               experience={exp}
               onClick={() => setSelectedItem(exp)}
+            />
+          ))}
+        </div>
+      </Section>
+
+      <Section id="projects" title="Projects" className={styles.darkSection}>
+        <div className={styles.projectsGrid}>
+          {resumeData.projects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              project={project}
+              onClick={() => setSelectedItem(project)}
             />
           ))}
         </div>
