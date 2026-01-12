@@ -28,10 +28,10 @@
     flex-shrink: 0;
     width: 60px;
     height: 60px;
-    background: white;
+    /* background: white; Removed to fix white box issue */
     /* Ensure logos are visible if transparent */
     border-radius: 12px;
-    padding: 5px;
+    /* padding: 5px; Removed to allows full-bleed crop */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,7 +41,7 @@
 .logo {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .headerContent {

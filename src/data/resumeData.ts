@@ -54,6 +54,16 @@ export const resumeData = {
         "Honors and Co-op in Computer Engineering with Engineering Management an Entrepreneurship",
         "Expected graduation date: June, 2029"
       ]
+    },
+    {
+      degree: "Sci-Tech & SHSM High School Diploma",
+      school: "Port Credit Secondary School",
+      location: "Mississauga, ON",
+      period: "2020-2024",
+      details: [
+        "Graduated with Honour Roll in the Sci-Tech program",
+        "Majored in Manufacturing Technology for the Specialist High Skills Major (SHSM) Program"
+      ]
     }
   ],
   experience: [
@@ -62,7 +72,7 @@ export const resumeData = {
       company: "Retailogists",
       location: "Montreal, Quebec (Hybrid)",
       period: "Summer 2025",
-      logo: "/vercel.svg",
+      logo: "/logos/retailogists.png",
       website: "https://retailogists.com",
       description: [
         "Built MVP of a web-app, now featured on Shopify’s App Home page. Specifically worked on Traffic Classifier (Avia) project using TypeScript/JavaScript, BigQuery, Cloud SQL, Docker, and GCP",
@@ -75,7 +85,7 @@ export const resumeData = {
       company: "Marcus Evans",
       location: "Toronto, Ontario (Hybrid)",
       period: "Fall 2022",
-      logo: "/next.svg",
+      logo: "/logos/marcus-evans.png",
       website: "https://www.marcusevans.com",
       description: [
         "Optimized company efficiency through internal tools using Python, JavaScript, and Microsoft SQL",
@@ -88,7 +98,7 @@ export const resumeData = {
       company: "Gems Learning Institute",
       location: "Oakville, Ontario",
       period: "Fall 2022-present",
-      logo: "/vercel.svg",
+      logo: "/logos/gems.png",
       website: "https://www.gemslearninginstitute.com",
       description: [
         "Developed and delivered AI, robotics, and coding curricula (OpenCV, Python, Scratch) for Grades 1-8",
@@ -101,7 +111,7 @@ export const resumeData = {
       company: "Fiverr",
       location: "Ontario",
       period: "Fall 2021-present",
-      logo: "/next.svg",
+      logo: "/logos/discord.png",
       website: "https://www.fiverr.com",
       description: [
         "Created, host and manage bots serving 20k+ users",
