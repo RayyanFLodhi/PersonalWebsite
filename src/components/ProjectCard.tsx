@@ -13,6 +13,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
             <div className={styles.header}>
                 <h3 className={styles.title}>{project.title}</h3>
                 <span className={styles.role}>{project.role}</span>
+                {project.website && (
+                    <a
+                        href={project.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.websiteLink}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        Visit Website
+                    </a>
+                )}
             </div>
             <div className={styles.meta}>
                 <span>{project.period}</span>

@@ -67,8 +67,40 @@ const Hero = () => {
                     <p className={styles.summary}>{resumeData.summary}</p>
 
                     <div className={styles.actions}>
-                        <a href="#contact" className={styles.primaryBtn}>Contact Me</a>
-                        <a href="#projects" className={styles.secondaryBtn}>View Work</a>
+                        <div className={styles.actionRow}>
+                            <a href="#projects" className={`${styles.heroBtn} ${styles.btnPrimary}`}>
+                                Projects
+                            </a>
+                            <a href="#contact" className={`${styles.heroBtn} ${styles.btnSecondary}`}>
+                                Contact
+                            </a>
+                            <a
+                                href="/RayyanLodhisResume.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`${styles.heroBtn} ${styles.btnPrimary}`}
+                            >
+                                Resume
+                            </a>
+                        </div>
+                        <div className={styles.actionRowBottom}>
+                            <a
+                                href="https://github.com/RayyanFLodhi"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`${styles.heroBtn} ${styles.btnSecondary}`}
+                            >
+                                GitHub
+                            </a>
+                            <a
+                                href="https://www.linkedin.com/in/rayyan-lodhi/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`${styles.heroBtn} ${styles.btnSecondary}`}
+                            >
+                                LinkedIn
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

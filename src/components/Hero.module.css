@@ -11,10 +11,16 @@
 .heroContainer {
     position: relative;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .content {
     max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .videoBackground {
@@ -83,39 +89,75 @@
 }
 
 .actions {
+    --action-gap: 0.75rem;
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: var(--action-gap);
+    width: 100%;
+    max-width: 34rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.primaryBtn,
-.secondaryBtn {
-    padding: 0.8rem 1.5rem;
+.actionRow {
+    display: flex;
+    gap: var(--action-gap);
+    width: 100%;
+}
+
+.actionRow .heroBtn {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.actionRowBottom {
+    display: flex;
+    justify-content: center;
+    gap: var(--action-gap);
+    width: 100%;
+}
+
+.actionRowBottom .heroBtn {
+    flex: 0 0 calc((100% - 2 * var(--action-gap)) / 3);
+    max-width: calc((100% - 2 * var(--action-gap)) / 3);
+}
+
+.heroBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 2.85rem;
+    padding: 0.65rem 0.85rem;
     border-radius: 6px;
     font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.2;
     transition: all var(--transition-fast);
     text-decoration: none;
+    text-align: center;
 }
 
-.primaryBtn {
+.btnPrimary {
     background: var(--primary);
     color: white;
     border: 1px solid var(--primary);
     box-shadow: 0 0 15px var(--primary-glow);
 }
 
-.primaryBtn:hover {
+.btnPrimary:hover {
     background: transparent;
     color: var(--primary);
 }
 
-.secondaryBtn {
+.btnSecondary {
     background: white;
     color: #000;
     border: 1px solid white;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
-.secondaryBtn:hover {
+.btnSecondary:hover {
     background: transparent;
     color: white;
 }
@@ -143,12 +185,6 @@
     }
 
     .hero {
-        text-align: center;
-        justify-content: center;
-    }
-
-    .heroContainer {
-        display: flex;
         justify-content: center;
     }
 
@@ -156,13 +192,23 @@
         max-width: 100%;
     }
 
-    .actions {
-        justify-content: center;
-    }
-
     .videoOverlay {
         background: linear-gradient(135deg,
                 rgba(0, 0, 0, 0.9) 0%,
                 rgba(0, 0, 0, 0.85) 100%);
+    }
+}
+
+@media (max-width: 540px) {
+    .actionRow,
+    .actionRowBottom {
+        flex-direction: column;
+    }
+
+    .actionRow .heroBtn,
+    .actionRowBottom .heroBtn {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
     }
 }

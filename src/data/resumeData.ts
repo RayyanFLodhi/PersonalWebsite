@@ -29,6 +29,7 @@ export interface Project {
   description: string[];
   techCheck?: string[];
   image?: string;
+  website?: string;
 }
 
 export interface Award {
@@ -41,18 +42,18 @@ export interface Award {
 
 export const resumeData = {
   name: "Rayyan Lodhi",
-  title: "Computer Engineering Student",
+  title: "Computer Engineering & Management at uOttawa",
   location: "Ontario, Canada",
-  summary: "Second year Computer Engineering student at the University of Ottawa, Honour roll and Co-op. Over eight months’ experience in designing, developing, and testing software applications. Proficient in multiple programming languages and software development, including Agile and Scrum.",
+  summary:
+    "8+ months of experience in Full-Stack, Embedded Systems and Computer Architecture systems.",
   education: [
     {
-      degree: "BAsc, Computer Engineering (Management and Entrepreneurship)",
+      degree: "BAsc, Computer Engineering (Management & Entrepreneurship)",
       school: "University of Ottawa",
       location: "ON",
       period: "2024-2029",
       details: [
-        "Honors and Co-op in Computer Engineering with Engineering Management an Entrepreneurship",
-        "Expected graduation date: June, 2029"
+        "Computer Engineering with Engineering Management and Entrepreneurship",
       ]
     },
     {
@@ -62,7 +63,7 @@ export const resumeData = {
       period: "2020-2024",
       details: [
         "Graduated with Honour Roll in the Sci-Tech program",
-        "Majored in Manufacturing Technology for the Specialist High Skills Major (SHSM) Program"
+        "Majored in Manufacturing Technology for the Specialist High Skills Major"
       ]
     }
   ],
@@ -70,7 +71,7 @@ export const resumeData = {
     {
       role: "Software Engineering Internship",
       company: "Retailogists",
-      location: "Montreal, Quebec (Hybrid)",
+      location: "Canada (Remote)",
       period: "Summer 2025",
       logo: "/logos/retailogists.png",
       website: "https://retailogists.com",
@@ -117,6 +118,17 @@ export const resumeData = {
         "Created, host and manage bots serving 20k+ users",
         "Integrated PostgreSQL with python (asyncpg, psycopg2), API Design, AWS Lambda"
       ]
+    },
+    {
+      role: "Founder & CEO",
+      company: "The C-Squad",
+      location: "",
+      period: "2018-Present",
+      logo: "/placeholder-project.png",
+      website: "",
+      description: [
+        "Ran STEM & cancer fundraising events; partnered with SickKids, Professional Engineers of Ontario, and various community sponsors."
+      ]
     }
   ],
   skills: [
@@ -135,7 +147,7 @@ export const resumeData = {
       role: "Software/Electrical Engineer",
       location: "Ottawa, Ontario",
       period: "2025",
-      image: "/placeholder-project.png",
+      image: "/extracurriculurs/uorover.png",
       description: [
         "Implementing ROS2 motor control systems in Python, mapping controller inputs to robot actuators for uOttawa’s official Mars Rover team."
       ]
@@ -167,10 +179,12 @@ export const resumeData = {
       role: "ML Engineer & Backend Developer",
       location: "Ottawa, Ontario",
       period: "January 2024",
-      image: "/placeholder-project.png",
+      image: "/projects/locksmith-ai.png",
+      website: "https://locksmith-ai.onrender.com/",
       description: [
         "Built a password strength detector at UottaHack 7 to help users understand and improve their password security",
         "Developed Random Forest machine learning algorithm to analyze password strength with robust accuracy",
+        "Managed data ingestion of 1 million+ records utilizing SQLite",
         "Implemented Flask backend to handle functionality and integrate all features seamlessly",
         "Integrated Groq API to provide secondary password strength ratings and generate stronger password suggestions",
         "Included data breach checker to verify if user credentials have been compromised"
@@ -180,14 +194,7 @@ export const resumeData = {
   ],
   leadership: [], // Deprecated, strictly using categories below
   highSchoolInitiatives: [
-    {
-      title: "The C-Squad",
-      role: "Founder & CEO",
-      location: "",
-      period: "2018-Present",
-      image: "/placeholder-project.png",
-      description: ["Ran STEM & cancer fundraising events; partnered with SickKids, Professional Engineers of Ontario, and various community sponsors."]
-    },
+
     {
       title: "PDSB Middle School Hackathon (AI Workshop)",
       role: "Lead Organizer",
@@ -201,7 +208,7 @@ export const resumeData = {
       role: "Lead Programmer",
       location: "Ontario",
       period: "09/23-04/24",
-      image: "/placeholder-project.png",
+      image: "/extracurriculurs/vex.png",
       description: ["Led programming efforts for the VEX V5 system, allowing the team to rank Top 50 in Ontario."]
     },
     {
@@ -209,7 +216,7 @@ export const resumeData = {
       role: "Lead Organizer",
       location: "",
       period: "", // Not specified clearly in prompt, leaving empty or generic
-      image: "/placeholder-project.png",
+      image: "/extracurriculurs/pdsbTournament.png",
       description: ["Managed volunteers, contestants, pairings, event logistics, and more."]
     },
     {
@@ -217,7 +224,7 @@ export const resumeData = {
       role: "President",
       location: "",
       period: "09/22-06/24",
-      image: "/placeholder-project.png",
+      image: "/extracurriculurs/pcssChess.png",
       description: ["Founded club, organized tournaments/weekly meets."]
     },
     {
@@ -225,7 +232,7 @@ export const resumeData = {
       role: "Patient Ambassador",
       location: "Toronto, Ontario",
       period: "03/18-Present",
-      image: "/placeholder-project.png",
+      image: "/extracurriculurs/sickKids.png",
       description: ["Spoke at major events: CP24, CTV, Globe & Mail, #Tech4SickKids."]
     },
     {
@@ -278,7 +285,7 @@ export const resumeData = {
       title: "3rd Place Gems Chess CYCC Qualifier",
       organization: "Gems Learning Institute",
       year: "2023",
-      image: "/placeholder-project.png",
+      image: "/awards/u18Win.png",
       description: "Achieved 3rd place in a competitive chess tournament qualifying for the Canadian Youth Chess Championship, demonstrating strategic planning and problem-solving skills."
     },
     {

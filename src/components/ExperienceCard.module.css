@@ -64,18 +64,49 @@
     margin: 0;
 }
 
+.companyRow {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.companyCluster {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    min-width: 0;
+}
+
 .company {
     font-size: 1.1rem;
     color: var(--primary);
     margin: 0;
-    margin-bottom: 0.5rem;
 }
 
-.meta {
+.clusterSep {
+    color: var(--secondary-foreground);
+    font-weight: 500;
+    user-select: none;
+}
+
+.location {
+    font-size: 0.95rem;
+    color: var(--secondary-foreground);
+}
+
+.date {
     font-size: 0.9rem;
     color: var(--secondary-foreground);
-    display: flex;
-    gap: 1rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* Period sits after company/location (not pushed to the far right) */
+.companyRow .date {
+    padding-left: 0.25rem;
 }
 
 .websiteLink {
@@ -120,8 +151,17 @@
         gap: 0.5rem;
     }
 
-    .meta {
+    .companyRow {
         flex-direction: column;
-        gap: 0.25rem;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .companyRow .date {
+        padding-left: 0;
+    }
+
+    .date {
+        white-space: normal;
     }
 }

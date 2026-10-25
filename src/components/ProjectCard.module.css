@@ -73,6 +73,7 @@
     margin-top: auto;
     /* Pushes to bottom if tags aren't there/enough to fill */
     width: 100%;
+    height: 200px;
     overflow: hidden;
     border-radius: 8px;
     border: 1px solid var(--border);
@@ -80,7 +81,24 @@
 
 .projectImage {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
+}
+
+.websiteLink {
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-decoration: none;
+    border: 1px solid var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+.websiteLink:hover {
+    background: var(--primary);
+    color: var(--background);
 }

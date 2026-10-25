@@ -34,10 +34,19 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience, onClick }) 
                             </a>
                         )}
                     </div>
-                    <h4 className={styles.company}>{experience.company}</h4>
-                    <div className={styles.meta}>
+                    <div className={styles.companyRow}>
+                        <div className={styles.companyCluster}>
+                            <h4 className={styles.company}>{experience.company}</h4>
+                            {experience.location && (
+                                <>
+                                    <span className={styles.clusterSep} aria-hidden="true">
+                                        ·
+                                    </span>
+                                    <span className={styles.location}>{experience.location}</span>
+                                </>
+                            )}
+                        </div>
                         <span className={styles.date}>{experience.period}</span>
-                        <span className={styles.location}>{experience.location}</span>
                     </div>
                 </div>
             </div>

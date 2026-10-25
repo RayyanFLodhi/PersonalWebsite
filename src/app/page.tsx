@@ -98,24 +98,16 @@ export default function Home() {
             <div className={styles.photoWrapper}>
               <img src="/profile-1.png" alt="Rayyan Lodhi" className={styles.photo1} />
             </div>
-            <div className={styles.photoWrapper}>
-              <img src="/profile-2.png" alt="Rayyan Lodhi" className={styles.photo2} />
-            </div>
           </div>
 
           <div className={styles.aboutContent}>
             <div className={styles.introSection}>
               <h3 className={styles.introHeading}>Nice to meet you!</h3>
               <p className={styles.introText}>
-                I'm a passionate Computer Engineering student who loves building things that make a difference.
-                From developing AI-powered applications to teaching robotics to young students, I'm always looking
+                I'm a passionate student who loves building things that make a difference.
+                From utilzing Computer Vision and Embedded Systems with Robots, to Computer Architecture I'm always looking
                 for ways to combine technology with real-world impact.
               </p>
-            </div>
-
-            <div className={styles.backgroundSection}>
-              <h3 className={styles.sectionHeading}>Background</h3>
-              <p className={styles.text}>{resumeData.summary}</p>
             </div>
 
             <div className={styles.education}>
