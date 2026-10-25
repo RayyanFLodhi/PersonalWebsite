@@ -1,10 +1,52 @@
 .section {
-    padding: var(--section-spacing) 0;
-    position: relative;
+  padding: var(--section-y) 0;
+  position: relative;
 }
 
-@media (max-width: 768px) {
-    .section {
-        padding: 3rem 0;
-    }
+.plain { background: var(--bg); }
+.tint {
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.ink {
+  background: var(--ink);
+  color: var(--bg);
+}
+.ink .eyebrow,
+.ink .lede { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.ink .rule { background: color-mix(in srgb, var(--bg) 30%, transparent); }
+.ink .num { color: var(--radar); }
+
+.head {
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  max-width: 44rem;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.num {
+  color: var(--accent);
+  font-weight: 500;
+}
+.rule {
+  width: 2.25rem;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin-top: 0.9rem;
+  font-size: 1.05rem;
+  color: var(--ink-2);
+  max-width: 40rem;
 }

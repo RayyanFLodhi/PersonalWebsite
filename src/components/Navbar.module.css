@@ -1,61 +1,208 @@
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 1.5rem 0;
-    z-index: 1000;
-    transition: all var(--transition-medium);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid transparent;
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  padding: 0.9rem 0;
+  transition: padding var(--t-med), background var(--t-med), border-color var(--t-med);
+  border-bottom: 1px solid transparent;
 }
 
 .scrolled {
-    padding: 1rem 0;
-    background: rgba(10, 10, 10, 0.8);
-    border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom-color: var(--line);
 }
 
-.navContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.logo {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--foreground);
-    transition: color var(--transition-fast);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
 }
 
-.logo:hover {
-    color: var(--primary);
+.mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--ink);
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.mark::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--radar) 60%, transparent);
+}
+.mark span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0 0;
+  background: conic-gradient(from 0deg, color-mix(in srgb, var(--radar) 90%, transparent), transparent 90deg);
+  animation: sweep 3.2s linear infinite;
+}
+@keyframes sweep {
+  to { transform: rotate(360deg); }
 }
 
-.navLinks {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
+.brandText {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.brandSub {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  white-space: nowrap;
 }
 
-.navLink {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--secondary-foreground);
-    transition: color var(--transition-fast);
-    position: relative;
+.links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.navLink:hover {
-    color: var(--foreground);
+.link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.link:hover {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  color: var(--ink);
+}
+.linkActive {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.linkNum {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+.linkActive .linkNum {
+  color: var(--accent);
 }
 
-/* Mobile responsive styles can be added here */
-@media (max-width: 768px) {
-    .navLinks {
-        display: none;
-        /* For simplicity in MVP, or add hamburger menu */
-    }
+.resume {
+  margin-left: 0.5rem;
+  min-height: 2.3rem;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.85rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.counterSep {
+  color: var(--line-strong);
+  margin: 0 0.1rem;
+}
+
+.burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  position: relative;
+  background: var(--surface);
+}
+.burger span {
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform var(--t-med), top var(--t-med);
+}
+.burger span:first-child { top: 15px; }
+.burger span:last-child { top: 23px; }
+.open .burger span:first-child { top: 19px; transform: rotate(45deg); }
+.open .burger span:last-child { top: 19px; transform: rotate(-45deg); }
+
+@media (max-width: 1200px) {
+  .brandSub { display: none; }
+  .link { padding: 0.45rem 0.55rem; font-size: 0.86rem; }
+}
+
+@media (max-width: 900px) {
+  .burger { display: block; }
+  .brandSub { display: none; }
+
+  .links {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    padding: 6rem var(--gutter) 2rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    background: var(--bg);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity var(--t-med), transform var(--t-med);
+    z-index: -1;
+  }
+  .open .links {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  .open {
+    background: var(--bg);
+  }
+  .link {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 0.7rem 0.5rem;
+    border-radius: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .linkNum { font-size: 0.8rem; }
+  .resume {
+    margin: 1.25rem 0 0;
+    align-self: flex-start;
+    font-size: 1rem;
+    min-height: 2.9rem;
+  }
 }

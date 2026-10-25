@@ -1,26 +1,29 @@
 import React from 'react';
 import styles from './SkillsList.module.css';
-import { SkillCategory } from '@/data/resumeData';
+import Reveal from './Reveal';
+import type { SkillCategory } from '@/data/resumeData';
 
-interface SkillsListProps {
-    categories: SkillCategory[];
+export default function SkillsList({ categories }: { categories: SkillCategory[] }) {
+  return (
+    <div className={styles.grid}>
+      {categories.map((cat, i) => (
+        <Reveal key={cat.category} delay={(i % 3) * 70}>
+          <div className={styles.group} data-domain={cat.domain}>
+            <h3 className={styles.heading}>
+              <span className={styles.dot} aria-hidden="true" />
+              {cat.category}
+              <span className={`mono ${styles.count}`}>{String(cat.skills.length).padStart(2, '0')}</span>
+            </h3>
+            <ul className={styles.list}>
+              {cat.skills.map((s) => (
+                <li key={s} className="chip">
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
 }
-
-const SkillsList: React.FC<SkillsListProps> = ({ categories }) => {
-    return (
-        <div className={styles.grid}>
-            {categories.map((cat) => (
-                <div key={cat.category} className={styles.category}>
-                    <h3 className={styles.categoryTitle}>{cat.category}</h3>
-                    <div className={styles.skills}>
-                        {cat.skills.map((skill) => (
-                            <span key={skill} className={styles.skill}>{skill}</span>
-                        ))}
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-};
-
-export default SkillsList;

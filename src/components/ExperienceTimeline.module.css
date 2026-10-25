@@ -1,0 +1,206 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 180px 40px minmax(0, 1fr);
+  gap: 0 1rem;
+  padding-bottom: 2.75rem;
+}
+.entry:last-child {
+  padding-bottom: 0;
+}
+.entry:last-child .spine::before {
+  bottom: auto;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--line-strong), transparent);
+}
+
+.when {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 0.35rem;
+  text-align: right;
+}
+.period {
+  color: var(--ink);
+  font-weight: 500;
+}
+.loc {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+.nowTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  color: var(--radar);
+}
+.nowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--radar);
+  animation: blink 1.4s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0.25; }
+}
+
+.spine {
+  position: relative;
+}
+.spine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--line-strong);
+}
+.node {
+  position: absolute;
+  left: 50%;
+  top: 0.55rem;
+  width: 13px;
+  height: 13px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--d);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+
+.body {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.35rem 1.5rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+  min-width: 0;
+}
+.entry:hover .body {
+  border-color: color-mix(in srgb, var(--d) 55%, var(--line));
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.top {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--d) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--d) 30%, transparent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--d);
+  font-size: 1rem;
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.titles { min-width: 0; }
+
+.role {
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.company {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  margin-top: 0.15rem;
+}
+.company a:hover {
+  color: var(--d);
+}
+
+.bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+.bullets li {
+  position: relative;
+  padding-left: 1.1rem;
+}
+.bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--d);
+  transform: rotate(45deg);
+}
+
+.more {
+  margin-top: 0.75rem;
+  color: var(--ink);
+  padding: 0.2rem 0;
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+.more:hover {
+  color: var(--d);
+  border-color: var(--d);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+
+@media (max-width: 760px) {
+  .entry {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 0 0.9rem;
+  }
+  .when {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    text-align: left;
+    padding: 0 0 0.6rem;
+  }
+  .spine {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .body {
+    grid-column: 2;
+    padding: 1.1rem 1.1rem 1.2rem;
+  }
+}

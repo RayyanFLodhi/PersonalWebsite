@@ -1,40 +1,63 @@
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
 }
 
-.category {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
+.group {
+  height: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.3rem 1.3rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+}
+.group:hover {
+  border-color: color-mix(in srgb, var(--d) 55%, var(--line));
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
 }
 
-.categoryTitle {
-    font-size: 1.1rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.5rem;
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--d);
+  transform: rotate(45deg);
+}
+.count {
+  margin-left: auto;
 }
 
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+.list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.list .chip {
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.list .chip:hover {
+  background: var(--d);
+  border-color: var(--d);
+  color: #fff;
 }
 
-.skill {
-    font-size: 0.9rem;
-    color: var(--foreground);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    transition: all var(--transition-fast);
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-
-.skill:hover {
-    background: var(--primary-glow);
-    color: white;
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
 }

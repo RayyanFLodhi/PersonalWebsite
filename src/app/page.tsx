@@ -1,208 +1,177 @@
-"use client";
-
 import React from 'react';
+import Image from 'next/image';
 import Hero from '@/components/Hero';
+import Ticker from '@/components/Ticker';
+import Stats from '@/components/Stats';
 import Section from '@/components/Section';
-import ExperienceCard from '@/components/ExperienceCard';
-import ProjectCard from '@/components/ProjectCard';
-import AwardCard from '@/components/AwardCard';
+import Reveal from '@/components/Reveal';
+import ExperienceTimeline from '@/components/ExperienceTimeline';
+import Card from '@/components/Card';
+import AwardsList from '@/components/AwardsList';
 import SkillsList from '@/components/SkillsList';
-import Modal from '@/components/Modal';
 import { resumeData } from '@/data/resumeData';
 import styles from './page.module.css';
 
 export default function Home() {
-  const [selectedItem, setSelectedItem] = React.useState<any>(null);
-
-  const renderModalContent = (item: any) => {
-    if (!item) return null;
-    // Determine type based on fields (naive check or passed context)
-    // Common fields: title/role, company/organization, period/year, description (array or string)
-
-    // Normalize data for display
-    const title = item.title || item.role;
-    const subtitle = item.company || item.organization || item.role; // Fallback for Project which has title+role
-    const date = item.period || item.year;
-    const location = item.location;
-    const description = Array.isArray(item.description) ? item.description : [item.description];
-    const image = item.image || item.logo;
-    const link = item.website;
-
-    return (
-      <div>
-        {image && (
-          <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
-            <img src={image} alt={title} style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'contain', borderRadius: '8px' }} />
-          </div>
-        )}
-        <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: 'var(--foreground)' }}>{title}</h2>
-        <h3 style={{ fontSize: '1.5rem', color: 'var(--primary)', marginBottom: '0.5rem' }}>{subtitle}</h3>
-        <div style={{ display: 'flex', gap: '1rem', color: 'var(--secondary-foreground)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-          <span>{date}</span>
-          {location && <span>• {location}</span>}
-        </div>
-
-        {link && (
-          <div style={{ marginBottom: '1.5rem' }}>
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-block',
-                padding: '0.5rem 1rem',
-                background: 'var(--primary)',
-                color: 'var(--background)',
-                textDecoration: 'none',
-                borderRadius: '6px',
-                fontWeight: '500'
-              }}
-            >
-              Visit Website
-            </a>
-          </div>
-        )}
-
-        <ul style={{ paddingLeft: '1.5rem', color: 'var(--secondary-foreground)', lineHeight: '1.8' }}>
-          {description.map((d: string, i: number) => (
-            <li key={i} style={{ marginBottom: '0.5rem' }}>{d}</li>
-          ))}
-        </ul>
-
-        {item.techCheck && (
-          <div style={{ marginTop: '2rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-            {item.techCheck.map((tech: string) => (
-              <span key={tech} style={{
-                padding: '0.25rem 0.75rem',
-                background: 'rgba(255,255,255,0.05)',
-                borderRadius: '100px',
-                fontSize: '0.85rem',
-                border: '1px solid var(--border)'
-              }}>
-                {tech}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
+  const current = resumeData.experience.filter((e) => e.current);
 
   return (
     <>
       <Hero />
+      <Ticker items={resumeData.ticker} />
+      <Stats stats={resumeData.stats} />
 
-      <Section id="about" title="About">
-        <div className={styles.aboutContainer}>
-          <div className={styles.aboutPhotos}>
-            <div className={styles.photoWrapper}>
-              <img src="/profile-1.png" alt="Rayyan Lodhi" className={styles.photo1} />
-            </div>
-          </div>
+      {/* 01 — About */}
+      <Section id="about" index={1} eyebrow="Mission brief" title="Software that has to work in the physical world.">
+        <div className={styles.about}>
+          <Reveal className={styles.portraitWrap}>
+            <figure className={styles.portrait}>
+              <div className={styles.portraitImg}>
+                <Image src="/profile-1.png" alt="Rayyan Lodhi" fill sizes="(max-width: 960px) 100vw, 40vw" priority={false} />
+              </div>
+              <span className={`${styles.corner} ${styles.tl}`} aria-hidden="true" />
+              <span className={`${styles.corner} ${styles.tr}`} aria-hidden="true" />
+              <span className={`${styles.corner} ${styles.bl}`} aria-hidden="true" />
+              <span className={`${styles.corner} ${styles.br}`} aria-hidden="true" />
+              <figcaption className="mono">Fig. 02 — Rayyan, Ottawa</figcaption>
+            </figure>
+          </Reveal>
 
-          <div className={styles.aboutContent}>
-            <div className={styles.introSection}>
-              <h3 className={styles.introHeading}>Nice to meet you!</h3>
-              <p className={styles.introText}>
-                I'm a passionate student who loves building things that make a difference.
-                From utilzing Computer Vision and Embedded Systems with Robots, to Computer Architecture I'm always looking
-                for ways to combine technology with real-world impact.
-              </p>
-            </div>
-
-            <div className={styles.education}>
-              <h3 className={styles.sectionHeading}>Education</h3>
-              {resumeData.education.map((edu, idx) => (
-                <div key={idx} className={styles.eduItem}>
-                  <div className={styles.eduHeader}>
-                    <span className={styles.degree}>{edu.degree}</span>
-                    <span className={styles.year}>{edu.period}</span>
-                  </div>
-                  <div className={styles.school}>{edu.school}, {edu.location}</div>
-                  <ul className={styles.eduDetails}>
-                    {edu.details.map((d, i) => <li key={i}>{d}</li>)}
-                  </ul>
-                </div>
+          <div className={styles.aboutText}>
+            <Reveal delay={80}>
+              {resumeData.intro.map((p, i) => (
+                <p key={i} className={styles.para}>
+                  {p}
+                </p>
               ))}
-            </div>
+            </Reveal>
+
+            <Reveal delay={160} className={styles.nowCard}>
+              <p className={`mono ${styles.nowHead}`}>
+                <span className={styles.nowDot} aria-hidden="true" />
+                Active assignments
+              </p>
+              <ul className={styles.nowList}>
+                {current.map((e) => (
+                  <li key={e.company} data-domain={e.domain}>
+                    <span className={styles.nowRole}>{e.role}</span>
+                    <span className={styles.nowCompany}>{e.company}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={220}>
+              <p className={`mono ${styles.eduHead}`}>Education</p>
+              <ul className={styles.edu}>
+                {resumeData.education.map((edu) => (
+                  <li key={edu.school}>
+                    <div className={styles.eduTop}>
+                      <strong>{edu.degree}</strong>
+                      <span className={`mono ${styles.eduPeriod}`}>{edu.period}</span>
+                    </div>
+                    <p className={styles.eduSchool}>
+                      {edu.school} · {edu.location}
+                    </p>
+                    <ul className={styles.eduDetails}>
+                      {edu.details.map((d) => (
+                        <li key={d}>{d}</li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
         </div>
       </Section>
 
-      <Section id="experience" title="Experience" className={styles.darkSection}>
-        <div>
-          {resumeData.experience.map((exp, index) => (
-            <ExperienceCard
-              key={index}
-              experience={exp}
-              onClick={() => setSelectedItem(exp)}
-            />
+      {/* 02 — Experience */}
+      <Section
+        id="experience"
+        index={2}
+        eyebrow="Flight log"
+        title="Experience"
+        lede="Research, government and startup work across simulation, data engineering, computer vision and internal tooling."
+        tone="tint"
+      >
+        <ExperienceTimeline items={resumeData.experience} />
+      </Section>
+
+      {/* 03 — Projects */}
+      <Section
+        id="projects"
+        index={3}
+        eyebrow="Payloads"
+        title="Projects"
+        lede="Hackathon builds, research prototypes and lab work. Each one is a tracked target on the scope above."
+      >
+        <div className={styles.cards}>
+          {resumeData.projects.map((p, i) => (
+            <Card key={p.code} item={p} index={i} />
           ))}
         </div>
       </Section>
 
-      <Section id="projects" title="Projects" className={styles.darkSection}>
-        <div className={styles.projectsGrid}>
-          {resumeData.projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              project={project}
-              onClick={() => setSelectedItem(project)}
-            />
+      {/* 04 — Leadership */}
+      <Section
+        id="leadership"
+        index={4}
+        eyebrow="Crew"
+        title="Leadership & teams"
+        lede="Rover team, campus organizations and the community work that started this whole thing."
+        tone="tint"
+      >
+        <div className={styles.cards}>
+          {resumeData.leadership.map((p, i) => (
+            <Card key={p.code} item={p} index={i} />
           ))}
         </div>
+
+        <details className={styles.earlier}>
+          <summary className="mono">
+            Earlier chapters · high school <span aria-hidden="true">↓</span>
+          </summary>
+          <div className={`${styles.cards} ${styles.cardsTight}`}>
+            {resumeData.earlier.map((p, i) => (
+              <Card key={p.code} item={p} index={i} />
+            ))}
+          </div>
+        </details>
       </Section>
 
-      <Section id="leadership" title="Leadership">
-        <h3 className={styles.subHeading}>University & Technical Teams</h3>
-        <div className={styles.projectsGrid}>
-          {resumeData.extracurriculars.map((item, index) => (
-            <ProjectCard
-              key={`extra-${index}`}
-              project={item}
-              onClick={() => setSelectedItem(item)}
-            />
-          ))}
-        </div>
-
-        <h3 className={styles.subHeading} style={{ marginTop: '3rem' }}>High School Initiatives</h3>
-        <div className={styles.projectsGrid}>
-          {resumeData.highSchoolInitiatives.map((item, index) => (
-            <ProjectCard
-              key={`hs-${index}`}
-              project={item}
-              onClick={() => setSelectedItem(item)}
-            />
-          ))}
-        </div>
+      {/* 05 — Awards */}
+      <Section id="awards" index={5} eyebrow="Commendations" title="Awards & certifications">
+        <AwardsList awards={resumeData.awards} />
       </Section>
 
-      <Section id="awards" title="Awards & Certifications" className={styles.darkSection}>
-        <div className={styles.projectsGrid}>
-          {resumeData.awards.map((award, index) => (
-            <AwardCard
-              key={index}
-              award={award}
-              onClick={() => setSelectedItem(award)}
-            />
-          ))}
-        </div>
-      </Section>
-
-      <Section id="skills" title="Skills">
+      {/* 06 — Skills */}
+      <Section id="skills" index={6} eyebrow="Instrument panel" title="Skills" tone="tint">
         <SkillsList categories={resumeData.skills} />
       </Section>
 
-      <Section id="contact" title="Contact">
-        <div className={styles.contactContainer}>
-          <p>Interested in working together? Get in touch!</p>
-          <a href="mailto:rlodh070@uottawa.ca" className="primaryBtn">Say Hello</a>
+      {/* 07 — Contact */}
+      <Section id="contact" index={7} eyebrow="Open channel" title="Let's build something that works in the field." tone="ink">
+        <div className={styles.contact}>
+          <Reveal>
+            <p className={styles.contactLede}>
+              Looking for co-op opportunities and interesting problems in simulation, robotics, computer vision and data
+              engineering. Email is the fastest way to reach me.
+            </p>
+          </Reveal>
+          <Reveal delay={100} className={styles.contactActions}>
+            <a href={`mailto:${resumeData.email}`} className={`btn accent ${styles.contactBtn}`}>
+              {resumeData.email}
+            </a>
+            <a href={resumeData.linkedin} target="_blank" rel="noopener noreferrer" className={`btn ${styles.contactGhost}`}>
+              LinkedIn ↗
+            </a>
+            <a href={resumeData.github} target="_blank" rel="noopener noreferrer" className={`btn ${styles.contactGhost}`}>
+              GitHub ↗
+            </a>
+          </Reveal>
         </div>
       </Section>
-
-      <Modal isOpen={!!selectedItem} onClose={() => setSelectedItem(null)}>
-        {renderModalContent(selectedItem)}
-      </Modal>
     </>
   );
 }
