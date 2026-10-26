@@ -73,6 +73,8 @@ Motion on this site is quiet and physical: things settle into place, they don't 
 
 Two breakpoints are in use: `768px` (section padding, about-grid collapse) and `900px` (Hero layout). Pick the one the neighbouring component uses. Mobile is a real audience for recruiters opening links from LinkedIn, so check narrow widths; horizontal overflow is the most common regression (body uses `overflow-x: clip`, so sticky still works, but an overflowing child will still scroll).
 
+Pinned stages (Hero, Journey) also use `(orientation: portrait)` and `(max-height: …)` queries rather than widths, because what matters there is whether the overlay copy fits beside or below the art. Stage heights are `100dvh` (not `svh`) so a phone's collapsing address bar doesn't leave a strip of page background under the stage. In the Journey, JS measures the tallest caption into `--caption-space` and portrait CSS shortens the scene art to sit above it; each scene SVG draws a `Ground` rect past its viewBox to fill that band. Check phones in both orientations, an iPad portrait, and the 375×667 size.
+
 ## Workflow
 
 1. Read the closest existing component and its module. Note which tokens, radii, and hover recipe it uses.

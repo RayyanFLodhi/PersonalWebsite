@@ -19,13 +19,15 @@
     --m2e: calc(var(--m2) * var(--m2) * (3 - 2 * var(--m2)));
     --m3e: calc(var(--m3) * var(--m3) * (3 - 2 * var(--m3)));
 
-    /* Camera position in world units. Cells are 100vw x 100svh. */
+    /* Camera position in world units. Cells are 100vw x 100dvh (dvh so the stage tracks a phone's
+       collapsing address bar instead of leaving a strip of page background underneath). */
     --camx: calc(100vw * (var(--m2e) + var(--m3e)));
-    --camy: calc(100svh * (1 - var(--m1e) + var(--m2e)));
+    --camy: calc(100dvh * (1 - var(--m1e) + var(--m2e)));
 
     position: sticky;
     top: 0;
-    height: 100svh;
+    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     background: #05060c;
     isolation: isolate;
@@ -38,7 +40,7 @@
     left: 0;
     top: 0;
     width: 300vw;
-    height: 200svh;
+    height: 200dvh;
     transform: translate(calc(var(--camx) * -0.3), calc(var(--camy) * -0.3));
     background-color: #05060c;
     background-image:
@@ -50,8 +52,8 @@
         radial-gradient(1px 1px at 90% 72%, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
         radial-gradient(1.5px 1.5px at 22% 46%, rgba(191, 219, 254, 0.8) 50%, transparent 51%),
         radial-gradient(1px 1px at 58% 10%, rgba(255, 255, 255, 0.65) 50%, transparent 51%),
-        radial-gradient(120vw 80svh at 40% 25%, rgba(139, 92, 246, 0.1), transparent 70%),
-        radial-gradient(90vw 70svh at 70% 40%, rgba(59, 130, 246, 0.08), transparent 70%);
+        radial-gradient(120vw 80dvh at 40% 25%, rgba(139, 92, 246, 0.1), transparent 70%),
+        radial-gradient(90vw 70dvh at 70% 40%, rgba(59, 130, 246, 0.08), transparent 70%);
     background-size:
         230px 230px,
         230px 230px,
@@ -71,7 +73,7 @@
     left: 0;
     top: 0;
     width: 300vw;
-    height: 200svh;
+    height: 200dvh;
     transform: translate(calc(-1 * var(--camx)), calc(-1 * var(--camy)));
     will-change: transform;
 }
@@ -79,7 +81,7 @@
 .cell {
     position: absolute;
     width: 100vw;
-    height: 100svh;
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -90,19 +92,19 @@
 
 .cellMars {
     left: 0;
-    top: 100svh;
+    top: 100dvh;
     /* Mars drops away once we re-enter the atmosphere elsewhere. */
     opacity: calc(1 - var(--m2e));
 }
 
 .cellSky {
     left: 100vw;
-    top: 100svh;
+    top: 100dvh;
 }
 
 .cellOffice {
     left: 200vw;
-    top: 100svh;
+    top: 100dvh;
 }
 
 .art {
@@ -111,6 +113,17 @@
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* Portrait: the caption would sit on top of the rover / the tracked drone / the desk, so the art box
+   stops where the caption band starts (JS writes --caption-space) and the ground colour, drawn past
+   the viewBox, fills the band behind the glass. `xMidYMax slice` keeps the ground on the box's floor;
+   a shorter box also means a smaller scale, so more of each scene fits on a narrow screen. */
+@media (orientation: portrait) {
+    .art {
+        height: calc(100% - var(--caption-space, 0px));
+        overflow: visible;
+    }
 }
 
 .vignette {
@@ -511,14 +524,6 @@
         height: 420svh;
     }
 
-    /* The Mars art is cropped hard on phones (~280 viewBox units visible) and the caption covers the
-       ground, so the rover is shrunk about its contact point and parked on the far ridge instead. */
-    .rover {
-        transform-box: view-box;
-        transform-origin: 560px 507px;
-        transform: translate(-60px, -112px) scale(0.5);
-    }
-
     .heading {
         top: 5rem;
         left: 1rem;
@@ -574,6 +579,69 @@
 
     .railDot {
         transition: width var(--transition-medium), background var(--transition-medium);
+    }
+}
+
+/* Narrow portrait phones see roughly the middle 400 viewBox units: nudge the rover's arm and the
+   second monitor inside that window. (Pure translates, so no transform-box is needed.) */
+@media (orientation: portrait) and (max-width: 480px) {
+    .rover {
+        transform: translate(-30px, 0);
+    }
+
+    .desk {
+        transform: translate(60px, 0);
+    }
+}
+
+/* Landscape phones: the caption would cover most of the scene, so it becomes a compact side panel. */
+@media (orientation: landscape) and (max-height: 520px) {
+    /* Only ~460 viewBox units are visible top-to-bottom here, so let the art hang 48px below the cell:
+       the subjects (drone, rover) drop out from under the fixed navbar and only flat ground is lost. */
+    .art {
+        height: calc(100% + 48px);
+    }
+
+    .heading {
+        top: 4.5rem;
+    }
+
+    .headingNote {
+        display: none;
+    }
+
+    .captions {
+        bottom: 2rem;
+        width: min(340px, 42vw);
+    }
+
+    .caption {
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+    }
+
+    .kicker {
+        font-size: 0.65rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .title {
+        font-size: 1.15rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .body {
+        font-size: 0.8rem;
+        line-height: 1.45;
+        margin-bottom: 0.6rem;
+    }
+
+    .cta {
+        font-size: 0.8rem;
+    }
+
+    .rail {
+        right: 1rem;
     }
 }
 

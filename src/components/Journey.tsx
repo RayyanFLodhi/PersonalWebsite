@@ -22,6 +22,33 @@ const chapterAt = (p: number) => CHAPTER_BREAKS.filter((b) => p >= b).length;
 const Journey = () => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const stageRef = useRef<HTMLElement>(null);
+    const captionsRef = useRef<HTMLDivElement>(null);
+
+    /* The captions float over the bottom of the stage. On portrait screens there is no room beside
+       them, so the scene art is squeezed to sit above them instead (see .art in the module). JS only
+       measures how tall that band is; CSS decides whether to use it. */
+    useEffect(() => {
+        const stage = stageRef.current;
+        const captions = captionsRef.current;
+        if (!stage || !captions) return;
+
+        const measure = () => {
+            const stageRect = stage.getBoundingClientRect();
+            const anchorRect = captions.getBoundingClientRect();
+            let tallest = 0;
+            for (const el of Array.from(captions.children)) {
+                tallest = Math.max(tallest, (el as HTMLElement).offsetHeight);
+            }
+            const space = stageRect.bottom - anchorRect.bottom + tallest + 20;
+            stage.style.setProperty('--caption-space', `${Math.round(space)}px`);
+        };
+
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(stage);
+        Array.from(captions.children).forEach((el) => ro.observe(el));
+        return () => ro.disconnect();
+    }, []);
 
     useEffect(() => {
         const wrapper = wrapperRef.current;
@@ -115,7 +142,7 @@ const Journey = () => {
                 </header>
 
                 {/* Chapter captions: one is visible at a time, cross-faded from --p */}
-                <div className={styles.captions}>
+                <div ref={captionsRef} className={styles.captions}>
                     {resumeData.journey.map((c, i) => (
                         <article key={c.scene} className={styles.caption} data-index={i}>
                             <p className={styles.kicker}>{c.kicker}</p>

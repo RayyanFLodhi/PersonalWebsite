@@ -13,6 +13,7 @@ const POSTER = `https://i.ytimg.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
 interface YTPlayer {
     playVideo(): void;
     pauseVideo(): void;
+    mute(): void;
     getCurrentTime(): number;
     seekTo(seconds: number, allowSeekAhead: boolean): void;
     destroy(): void;
@@ -57,7 +58,9 @@ const Hero = () => {
     const stageRef = useRef<HTMLElement>(null);
     const playerHostRef = useRef<HTMLDivElement>(null);
     const playerRef = useRef<YTPlayer | null>(null);
-    const [playing, setPlaying] = useState(false);
+    /* 'loading' shows the blurred poster, 'playing' fades the player in, 'fallback' keeps the poster
+       (and gives it a slow drift) when the embed can't autoplay: Low Power Mode, data saver, blocked embeds. */
+    const [video, setVideo] = useState<'loading' | 'playing' | 'fallback'>('loading');
 
     /* ---- Background video (poster shows instantly, player fades in when it actually plays) ---- */
     useEffect(() => {
@@ -65,6 +68,21 @@ const Hero = () => {
         if (!host) return;
         let cancelled = false;
         let loopTimer: ReturnType<typeof setInterval> | null = null;
+        let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+        let started = false;
+
+        // Mobile browsers sometimes ignore the initial autoplay but honour a play() issued from a user gesture.
+        const retry = () => {
+            if (started) return;
+            try {
+                playerRef.current?.mute();
+                playerRef.current?.playVideo();
+            } catch {
+                /* player not ready */
+            }
+        };
+        const gestureEvents: (keyof WindowEventMap)[] = ['touchstart', 'pointerdown', 'keydown'];
+        gestureEvents.forEach((ev) => window.addEventListener(ev, retry, { passive: true }));
 
         loadYouTubeApi().then((YT) => {
             if (cancelled || !host.isConnected) return;
@@ -86,7 +104,12 @@ const Hero = () => {
                 },
                 events: {
                     onReady: (e: YTPlayerEvent) => {
+                        e.target.mute();
                         e.target.playVideo();
+                        // If nothing has started by now, autoplay is blocked on this device: settle on the poster.
+                        fallbackTimer = setTimeout(() => {
+                            if (!started) setVideo('fallback');
+                        }, 6000);
                         loopTimer = setInterval(() => {
                             try {
                                 if (e.target.getCurrentTime() >= CLIP_END) e.target.seekTo(CLIP_START, true);
@@ -96,15 +119,21 @@ const Hero = () => {
                         }, 100);
                     },
                     onStateChange: (e: YTPlayerEvent) => {
-                        if (e.data === YT.PlayerState.PLAYING) setPlaying(true);
+                        if (e.data === YT.PlayerState.PLAYING) {
+                            started = true;
+                            setVideo('playing');
+                        }
                     },
+                    onError: () => setVideo('fallback'),
                 },
             });
         });
 
         return () => {
             cancelled = true;
+            gestureEvents.forEach((ev) => window.removeEventListener(ev, retry));
             if (loopTimer) clearInterval(loopTimer);
+            if (fallbackTimer) clearTimeout(fallbackTimer);
             try {
                 playerRef.current?.destroy();
             } catch {
@@ -198,10 +227,10 @@ const Hero = () => {
         <div ref={wrapperRef} className={styles.wrapper}>
             <section ref={stageRef} className={styles.stage} aria-label="Introduction">
                 {/* Video frame: full-bleed at the top, shrinks into a card as you scroll */}
-                <div className={styles.frame}>
+                <div className={styles.frame} data-video={video}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img className={styles.poster} src={POSTER} alt="" aria-hidden="true" />
-                    <div ref={playerHostRef} className={`${styles.player} ${playing ? styles.playing : ''}`} />
+                    <div ref={playerHostRef} className={styles.player} />
                     <div className={styles.overlay} />
                 </div>
 
