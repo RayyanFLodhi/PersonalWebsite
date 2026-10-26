@@ -1,0 +1,162 @@
+/* Spine geometry: [when 150px] [node 40px] [card]. The spine is drawn down the node column. */
+
+.list {
+    --p: 0; /* 0..1 fill, from JS */
+    --when: 150px;
+    --node: 40px;
+    --spine-x: calc(var(--when) + var(--node) / 2);
+
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.list::before,
+.list::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--spine-x);
+    width: 2px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.list::before {
+    background: var(--border);
+}
+
+.list::after {
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    transform: translateX(-50%) scaleY(var(--p));
+    transform-origin: top;
+    box-shadow: 0 0 14px var(--primary-glow);
+    will-change: transform;
+}
+
+.item {
+    --t: 0; /* fraction of the list where this node sits, from JS */
+    position: relative;
+    padding-bottom: 1.75rem;
+}
+
+.item:last-child {
+    padding-bottom: 0;
+}
+
+.reveal {
+    display: block;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: var(--when) var(--node) minmax(0, 1fr);
+    align-items: start;
+}
+
+.when {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 1.35rem;
+    padding-right: 1rem;
+    text-align: right;
+}
+
+.years {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--foreground);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.where {
+    font-size: 0.8rem;
+    color: var(--secondary-foreground);
+}
+
+.nodeCol {
+    position: relative;
+    height: 100%;
+    z-index: 1;
+}
+
+.node {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--background);
+    border: 2px solid var(--border);
+    transform: translate(-50%, -50%);
+    transition: border-color var(--transition-medium);
+}
+
+/* Lit state: fades in as the spine fill passes this node */
+.node::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18), 0 0 16px var(--primary-glow);
+    opacity: clamp(0, (var(--p) - var(--t)) * 40 + 0.5, 1);
+    transition: opacity var(--transition-fast);
+}
+
+@media (max-width: 768px) {
+    .list {
+        --when: 0px;
+        --node: 28px;
+    }
+
+    .row {
+        grid-template-columns: var(--node) minmax(0, 1fr);
+        grid-template-areas:
+            'node when'
+            'node card';
+    }
+
+    .when {
+        grid-area: when;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 0.6rem;
+        padding: 0 0 0.6rem;
+        text-align: left;
+    }
+
+    .years {
+        font-size: 0.95rem;
+    }
+
+    .nodeCol {
+        grid-area: node;
+    }
+
+    .node {
+        top: 10px;
+    }
+
+    .row > :last-child {
+        grid-area: card;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .list::after {
+        transform: translateX(-50%) scaleY(1);
+        transition: none;
+    }
+
+    .node::after {
+        opacity: 1;
+        transition: none;
+    }
+}

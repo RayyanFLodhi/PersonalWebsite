@@ -1,63 +1,165 @@
 .card {
-    background: var(--background);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
+    position: relative;
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: all var(--transition-fast);
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
     cursor: pointer;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Thin gradient rule that draws across the top on hover */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-medium);
 }
 
 .card:hover {
-    border-color: var(--accent);
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-.header {
-    margin-bottom: 0.5rem;
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.index {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--primary);
+}
+
+.meta {
+    font-size: 0.78rem;
+    color: var(--secondary-foreground);
+    text-align: right;
 }
 
 .title {
     font-size: 1.25rem;
     font-weight: 700;
+    line-height: 1.25;
     color: var(--foreground);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.3rem;
 }
 
 .role {
-    font-size: 0.9rem;
-    color: var(--accent);
+    font-size: 0.88rem;
     font-weight: 500;
-}
-
-.meta {
-    font-size: 0.8rem;
-    color: var(--secondary-foreground);
-    margin-bottom: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
 }
 
 .description {
-    list-style-position: inside;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    font-size: 0.93rem;
     color: var(--secondary-foreground);
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    flex-grow: 1;
 }
 
 .description li {
-    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1rem;
+    line-height: 1.55;
+}
+
+.description li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+.moreNote {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--secondary-foreground);
+}
+
+.aside {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    flex-grow: 1;
+}
+
+/* The one outcome a recruiter should walk away with */
+.highlight {
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--foreground);
+}
+
+.highlightLabel {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.imageContainer {
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.projectImage {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
 }
 
 .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: auto;
-    margin-bottom: 1rem;
-    /* Added spacing if image exists */
 }
 
 .tag {
@@ -69,21 +171,12 @@
     border: 1px solid var(--border);
 }
 
-.imageContainer {
+.actions {
     margin-top: auto;
-    /* Pushes to bottom if tags aren't there/enough to fill */
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-}
-
-.projectImage {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
 
 .websiteLink {
@@ -93,12 +186,80 @@
     border: 1px solid var(--primary);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
-    transition: all 0.2s ease;
-    display: inline-block;
-    margin-left: 1rem;
+    white-space: nowrap;
+    transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .websiteLink:hover {
     background: var(--primary);
     color: var(--background);
+}
+
+.open {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--secondary-foreground);
+    transition: color var(--transition-fast);
+}
+
+.card:hover .open {
+    color: var(--primary);
+}
+
+/* ---------- Featured: spans the grid row, copy left and outcome panel right ---------- */
+
+.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.07), rgba(255, 255, 255, 0.02) 60%);
+}
+
+.featured .title {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.featured .description {
+    font-size: 0.98rem;
+}
+
+.featured .aside {
+    flex-grow: 0;
+    padding-left: 2rem;
+    border-left: 1px solid var(--border);
+    justify-content: center;
+}
+
+.featured .actions {
+    margin-top: 0;
+}
+
+.featured .highlight {
+    font-size: 1.15rem;
+    padding: 1.1rem 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .featured {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    .featured .aside {
+        padding-left: 0;
+        border-left: 0;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .card::before,
+    .open,
+    .websiteLink {
+        transition: none;
+    }
 }

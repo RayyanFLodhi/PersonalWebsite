@@ -2,12 +2,15 @@
 
 import React from 'react';
 import Hero from '@/components/Hero';
+import Journey from '@/components/Journey';
 import Section from '@/components/Section';
-import ExperienceCard from '@/components/ExperienceCard';
+import ExperienceTimeline from '@/components/ExperienceTimeline';
 import ProjectCard from '@/components/ProjectCard';
+import { TeamCard, InitiativeLedger } from '@/components/LeadershipCards';
 import AwardCard from '@/components/AwardCard';
 import SkillsList from '@/components/SkillsList';
 import Modal from '@/components/Modal';
+import Reveal from '@/components/Reveal';
 import { resumeData } from '@/data/resumeData';
 import styles from './page.module.css';
 
@@ -25,8 +28,10 @@ export default function Home() {
     const date = item.period || item.year;
     const location = item.location;
     const description = Array.isArray(item.description) ? item.description : [item.description];
-    const image = item.image || item.logo;
+    const rawImage = item.image || item.logo;
+    const image = rawImage && !/placeholder/i.test(rawImage) ? rawImage : undefined;
     const link = item.website;
+    const highlight = item.highlight;
 
     return (
       <div>
@@ -41,6 +46,8 @@ export default function Home() {
           <span>{date}</span>
           {location && <span>• {location}</span>}
         </div>
+
+        {highlight && <div className={styles.modalHighlight}>{highlight}</div>}
 
         {link && (
           <div style={{ marginBottom: '1.5rem' }}>
@@ -58,7 +65,7 @@ export default function Home() {
                 fontWeight: '500'
               }}
             >
-              Visit Website
+              {/github\.com/i.test(link) ? 'View on GitHub' : 'Visit Website'}
             </a>
           </div>
         )}
@@ -88,116 +95,101 @@ export default function Home() {
     );
   };
 
+  const [featuredProject, ...otherProjects] = resumeData.projects;
+
   return (
     <>
       <Hero />
 
-      <Section id="about" title="About">
-        <div className={styles.aboutContainer}>
-          <div className={styles.aboutPhotos}>
-            <div className={styles.photoWrapper}>
-              <img src="/profile-1.png" alt="Rayyan Lodhi" className={styles.photo1} />
-            </div>
-          </div>
+      {/* Scroll-driven flight: Mars -> orbit -> drone airspace -> office */}
+      <Journey />
 
-          <div className={styles.aboutContent}>
-            <div className={styles.introSection}>
-              <h3 className={styles.introHeading}>Nice to meet you!</h3>
-              <p className={styles.introText}>
-                I'm a passionate student who loves building things that make a difference.
-                From utilzing Computer Vision and Embedded Systems with Robots, to Computer Architecture I'm always looking
-                for ways to combine technology with real-world impact.
-              </p>
-            </div>
-
-            <div className={styles.education}>
-              <h3 className={styles.sectionHeading}>Education</h3>
-              {resumeData.education.map((edu, idx) => (
-                <div key={idx} className={styles.eduItem}>
-                  <div className={styles.eduHeader}>
-                    <span className={styles.degree}>{edu.degree}</span>
-                    <span className={styles.year}>{edu.period}</span>
-                  </div>
-                  <div className={styles.school}>{edu.school}, {edu.location}</div>
-                  <ul className={styles.eduDetails}>
-                    {edu.details.map((d, i) => <li key={i}>{d}</li>)}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <Section
+        id="experience"
+        title="Experience"
+        eyebrow="Where I've worked"
+        lede="Eight roles across research, government, startups and teaching. Click any one for the full story."
+        className={styles.darkSection}
+      >
+        <ExperienceTimeline items={resumeData.experience} onSelect={setSelectedItem} />
       </Section>
 
-      <Section id="experience" title="Experience" className={styles.darkSection}>
-        <div>
-          {resumeData.experience.map((exp, index) => (
-            <ExperienceCard
-              key={index}
-              experience={exp}
-              onClick={() => setSelectedItem(exp)}
-            />
-          ))}
-        </div>
-      </Section>
-
-      <Section id="projects" title="Projects" className={styles.darkSection}>
+      <Section
+        id="projects"
+        title="Projects"
+        eyebrow="What I've built"
+        lede="Hackathon builds and research tooling, with code you can read."
+      >
         <div className={styles.projectsGrid}>
-          {resumeData.projects.map((project, index) => (
+          <Reveal className={styles.revealFeatured}>
             <ProjectCard
-              key={index}
-              project={project}
-              onClick={() => setSelectedItem(project)}
+              project={featuredProject}
+              index={0}
+              featured
+              onClick={() => setSelectedItem(featuredProject)}
             />
+          </Reveal>
+          {otherProjects.map((project, index) => (
+            <Reveal key={project.title} delay={(index % 3) * 70} className={styles.revealItem}>
+              <ProjectCard
+                project={project}
+                index={index + 1}
+                onClick={() => setSelectedItem(project)}
+              />
+            </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section id="leadership" title="Leadership">
-        <h3 className={styles.subHeading}>University & Technical Teams</h3>
-        <div className={styles.projectsGrid}>
+      <Section
+        id="leadership"
+        title="Leadership & Campus involvement"
+        eyebrow="Teams & community"
+        lede="The rover team, the developer community, and a decade of speaking and organizing."
+        className={styles.darkSection}
+      >
+        <div className={styles.teamsGrid}>
           {resumeData.extracurriculars.map((item, index) => (
-            <ProjectCard
-              key={`extra-${index}`}
-              project={item}
-              onClick={() => setSelectedItem(item)}
-            />
+            <Reveal key={item.title} delay={(index % 2) * 70} className={styles.revealItem}>
+              <TeamCard item={item} onClick={() => setSelectedItem(item)} />
+            </Reveal>
           ))}
         </div>
 
-        <h3 className={styles.subHeading} style={{ marginTop: '3rem' }}>High School Initiatives</h3>
-        <div className={styles.projectsGrid}>
-          {resumeData.highSchoolInitiatives.map((item, index) => (
-            <ProjectCard
-              key={`hs-${index}`}
-              project={item}
-              onClick={() => setSelectedItem(item)}
-            />
-          ))}
-        </div>
+        <Reveal>
+          <h3 className={`${styles.subHeading} ${styles.subHeadingSpaced}`}>Earlier initiatives</h3>
+        </Reveal>
+        <Reveal delay={60}>
+          <InitiativeLedger items={resumeData.highSchoolInitiatives} onSelect={setSelectedItem} />
+        </Reveal>
       </Section>
 
-      <Section id="awards" title="Awards & Certifications" className={styles.darkSection}>
-        <div className={styles.projectsGrid}>
+      <Section id="awards" title="Awards & Certifications" eyebrow="Recognition">
+        <div className={styles.awardsGrid}>
           {resumeData.awards.map((award, index) => (
-            <AwardCard
-              key={index}
-              award={award}
-              onClick={() => setSelectedItem(award)}
-            />
+            <Reveal key={award.title} delay={(index % 4) * 60} className={styles.revealItem}>
+              <AwardCard
+                award={award}
+                onClick={() => setSelectedItem(award)}
+              />
+            </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section id="skills" title="Skills">
-        <SkillsList categories={resumeData.skills} />
+      <Section id="skills" title="Skills" eyebrow="Toolbox" className={styles.darkSection}>
+        <Reveal delay={80}>
+          <SkillsList categories={resumeData.skills} />
+        </Reveal>
       </Section>
 
-      <Section id="contact" title="Contact">
-        <div className={styles.contactContainer}>
-          <p>Interested in working together? Get in touch!</p>
-          <a href="mailto:rlodh070@uottawa.ca" className="primaryBtn">Say Hello</a>
-        </div>
+      <Section id="contact" title="Contact" eyebrow="Say hi">
+        <Reveal delay={80}>
+          <div className={styles.contactContainer}>
+            <p>Open to co-op and internship opportunities. Let&#39;s talk.</p>
+            <a href={`mailto:${resumeData.email}`} className="primaryBtn">Say Hello</a>
+          </div>
+        </Reveal>
       </Section>
 
       <Modal isOpen={!!selectedItem} onClose={() => setSelectedItem(null)}>

@@ -1,148 +1,209 @@
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+/* The wrapper is tall; the stage sticks to the viewport while the wrapper scrolls past.
+   The hero's single input is --p (0 at the top, 1 when the stage releases), set from JS.
+   Everything else is derived in CSS so the choreography is cheap and declarative. */
+
+.wrapper {
     position: relative;
-    overflow: hidden;
-    padding-top: 60px;
-    /* Offset for navbar */
+    height: 320vh;
+    height: 320svh;
 }
 
-.heroContainer {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
+.stage {
+    /* No-JS / reduced-motion fallback: render the finished layout. */
+    --p: 1;
 
-.content {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
+    /* Acts (0..1 each), then eased copies for motion. */
+    --a: clamp(0, var(--p) / 0.3, 1);
+    --b: clamp(0, (var(--p) - 0.26) / 0.4, 1);
+    --c: clamp(0, (var(--p) - 0.62) / 0.26, 1);
+    --t: clamp(0, (var(--p) - 0.4) / 0.32, 1);
+    --ae: calc(1 - (1 - var(--a)) * (1 - var(--a)));
+    --be: calc(1 - (1 - var(--b)) * (1 - var(--b)));
+    --ce: calc(1 - (1 - var(--c)) * (1 - var(--c)));
+    --te: calc(1 - (1 - var(--t)) * (1 - var(--t)));
 
-.videoBackground {
-    position: absolute;
+    /* Where the video frame ends up (desktop): a card on the right. */
+    --frame-scale: 0.46;
+    --frame-x: 25vw;
+    --frame-y: 0px;
+
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100svh;
     overflow: hidden;
-    z-index: 0;
+    background: var(--background);
+    isolation: isolate;
 }
 
-.backgroundVideo {
+/* ---------- video frame ---------- */
+
+.frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #000;
+    transform: translate(calc(var(--frame-x) * var(--be)), calc(var(--frame-y) * var(--be)))
+        scale(calc(1 - (1 - var(--frame-scale)) * var(--be)));
+    border-radius: calc(var(--be) * 40px);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, calc(0.7 * var(--be)));
+    outline: 1px solid rgba(255, 255, 255, calc(0.14 * var(--be)));
+    will-change: transform, border-radius;
+}
+
+/* Poster + player both "cover" the frame like object-fit: cover, then a bit extra to crop the source's letterbox. */
+.poster,
+.player > iframe,
+.player > div {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1.5);
-    /* Aggressive scaling to crop out black bars embedded in video */
-    width: 100%;
-    height: 100%;
-    border: none;
+    width: max(100%, 177.78svh);
+    height: max(100%, 56.25vw);
+    transform: translate(-50%, -50%) scale(1.45);
+    border: 0;
     pointer-events: none;
 }
 
-.videoOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg,
-            rgba(0, 0, 0, 0.85) 0%,
-            rgba(0, 0, 0, 0.7) 50%,
-            rgba(0, 0, 0, 0.6) 100%);
-    z-index: 1;
+.poster {
+    object-fit: cover;
+    /* The thumbnail is the video's title card, so blur it into a colour wash until the player takes over. */
+    filter: blur(28px) saturate(1.2);
+    transform: translate(-50%, -50%) scale(1.6);
 }
 
-.greeting {
+.player {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+}
+
+.playing {
+    opacity: 1;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.85) 100%);
+    opacity: calc(1 - 0.55 * var(--be));
+}
+
+/* ---------- act 1: name ---------- */
+
+.intro {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 1.5rem;
+    opacity: calc(1 - var(--ae));
+    transform: translateY(calc(var(--ae) * -10vh)) scale(calc(1 - 0.08 * var(--ae)));
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.eyebrow {
     font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--primary);
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 1rem;
 }
 
 .name {
     font-family: var(--font-heading);
-    font-size: 5rem;
+    font-size: clamp(3.2rem, 11vw, 9.5rem);
     font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1rem;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0;
 }
 
-.title {
-    font-size: 2rem;
-    color: var(--foreground);
-    margin-bottom: 1.5rem;
-    font-weight: 600;
+.introTitle {
+    margin-top: 1.5rem;
+    font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+    font-weight: 500;
+    color: var(--secondary-foreground);
+}
+
+/* ---------- act 2: pitch ---------- */
+
+.copy {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+}
+
+.stage[data-phase='intro'] .copy {
+    pointer-events: none;
+}
+
+.copyInner {
+    width: 100%;
+}
+
+.copyCol {
+    max-width: 46%;
+    opacity: var(--te);
+    transform: translateY(calc((1 - var(--te)) * 56px));
+    will-change: transform, opacity;
+}
+
+.tagline {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
 }
 
 .summary {
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    line-height: 1.75;
     color: var(--secondary-foreground);
-    margin-bottom: 2.5rem;
-    line-height: 1.8;
+    max-width: 34rem;
+    margin-bottom: 2rem;
 }
 
 .actions {
-    --action-gap: 0.75rem;
     display: flex;
-    flex-direction: column;
-    gap: var(--action-gap);
-    width: 100%;
-    max-width: 34rem;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.actionRow {
-    display: flex;
-    gap: var(--action-gap);
-    width: 100%;
-}
-
-.actionRow .heroBtn {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-.actionRowBottom {
-    display: flex;
-    justify-content: center;
-    gap: var(--action-gap);
-    width: 100%;
-}
-
-.actionRowBottom .heroBtn {
-    flex: 0 0 calc((100% - 2 * var(--action-gap)) / 3);
-    max-width: calc((100% - 2 * var(--action-gap)) / 3);
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .heroBtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    min-height: 2.85rem;
-    padding: 0.65rem 0.85rem;
-    border-radius: 6px;
-    font-weight: 600;
+    min-height: 2.75rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
     font-size: 0.95rem;
+    font-weight: 600;
     line-height: 1.2;
-    transition: all var(--transition-fast);
     text-decoration: none;
-    text-align: center;
+    transition: transform var(--transition-fast), background var(--transition-fast), color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.heroBtn:hover {
+    transform: translateY(-2px);
 }
 
 .btnPrimary {
     background: var(--primary);
-    color: white;
+    color: #fff;
     border: 1px solid var(--primary);
-    box-shadow: 0 0 15px var(--primary-glow);
+    box-shadow: 0 0 18px var(--primary-glow);
 }
 
 .btnPrimary:hover {
@@ -151,64 +212,180 @@
 }
 
 .btnSecondary {
-    background: white;
-    color: #000;
-    border: 1px solid white;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--foreground);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
 }
 
 .btnSecondary:hover {
-    background: transparent;
-    color: white;
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
-.backgroundGlow {
+/* ---------- act 3: numbers ---------- */
+
+.stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.75rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border);
+    opacity: var(--ce);
+    transform: translateY(calc((1 - var(--ce)) * 32px));
+    will-change: transform, opacity;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.statValue {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.statLabel {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--secondary-foreground);
+}
+
+/* ---------- chrome ---------- */
+
+.cue {
     position: absolute;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-    opacity: 0.15;
-    z-index: 1;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: clamp(0, 1 - var(--a) * 3, 1);
     pointer-events: none;
 }
 
-@media (max-width: 768px) {
-    .name {
-        font-size: 3rem;
-    }
+.cueText {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--secondary-foreground);
+}
 
-    .title {
-        font-size: 1.5rem;
-    }
+.cueLine {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--foreground), transparent);
+    animation: cueDrop 1.8s ease-in-out infinite;
+}
 
-    .hero {
-        justify-content: center;
+@keyframes cueDrop {
+    0% {
+        transform: scaleY(0);
+        transform-origin: top;
     }
-
-    .content {
-        max-width: 100%;
+    50% {
+        transform: scaleY(1);
+        transform-origin: top;
     }
-
-    .videoOverlay {
-        background: linear-gradient(135deg,
-                rgba(0, 0, 0, 0.9) 0%,
-                rgba(0, 0, 0, 0.85) 100%);
+    51% {
+        transform-origin: bottom;
+    }
+    100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
     }
 }
 
-@media (max-width: 540px) {
-    .actionRow,
-    .actionRowBottom {
-        flex-direction: column;
+.progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform-origin: left;
+    transform: scaleX(var(--p));
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 900px) {
+    .stage {
+        /* On small screens the video stays full-bleed as a backdrop; the copy fades in over it. */
+        --frame-scale: 1;
+        --frame-x: 0px;
+        --frame-y: 0px;
     }
 
-    .actionRow .heroBtn,
-    .actionRowBottom .heroBtn {
-        flex: 1 1 auto;
+    .frame {
+        border-radius: 0;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .overlay {
+        opacity: 1;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.82) 100%);
+    }
+
+    .copyCol {
+        max-width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+
+    .stats {
+        justify-content: center;
+        gap: 1.75rem;
         width: 100%;
-        max-width: none;
+    }
+
+    .stat {
+        align-items: center;
+    }
+
+    .statValue {
+        font-size: 1.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wrapper {
+        height: auto;
+    }
+
+    .stage {
+        --p: 1 !important;
+        position: relative;
+    }
+
+    .intro,
+    .cue {
+        display: none;
+    }
+
+    .cueLine {
+        animation: none;
+    }
+
+    .player {
+        transition: none;
     }
 }
