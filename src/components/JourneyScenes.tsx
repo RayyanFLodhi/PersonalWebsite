@@ -12,6 +12,10 @@ import styles from './Journey.module.css';
 
 const ART = { viewBox: '0 0 1000 600', preserveAspectRatio: 'xMidYMax slice', 'aria-hidden': true as const };
 
+/* On portrait screens the art box is shorter than its cell (it stops above the caption) and the svg
+   overflows visibly, so each scene extends its ground colour below the viewBox to fill that band. */
+const Ground = ({ fill }: { fill: string }) => <rect x="-1000" y="599" width="3000" height="1400" fill={fill} />;
+
 /* ---------- 01 · Mars: the rover yard ---------- */
 
 export const MarsScene = () => (
@@ -122,6 +126,7 @@ export const MarsScene = () => (
         {/* wheel tracks leading in */}
         <path d="M-20 540 Q260 520 500 498" className={styles.track} />
         <path d="M-20 556 Q280 540 520 512" className={styles.track} />
+        <Ground fill="#1a0b08" />
     </svg>
 );
 
@@ -196,6 +201,7 @@ export const OrbitScene = () => (
 
         {/* the scene below is Mars: fade to black before the cell edge */}
         <rect x="0" y="440" width="1000" height="160" fill="url(#j-orbit-fade)" />
+        <Ground fill="#05060c" />
     </svg>
 );
 
@@ -298,6 +304,7 @@ export const SkyScene = () => (
         </Drone>
 
         <rect x="860" y="0" width="140" height="600" fill="url(#j-edge-r)" />
+        <Ground fill="#07070a" />
     </svg>
 );
 
@@ -373,7 +380,7 @@ export const OfficeScene = () => (
         <rect x="80" y="456" width="14" height="144" fill="#141317" />
         <rect x="900" y="456" width="14" height="144" fill="#141317" />
 
-        <g transform="translate(90 0)">
+        <g transform="translate(90 0)" className={styles.desk}>
         <g>
             <rect x="300" y="282" width="236" height="150" rx="8" fill="#0d0d10" stroke="#2c2c33" strokeWidth="2" />
             <rect x="310" y="292" width="216" height="130" rx="4" fill="url(#j-screen)" />
@@ -411,5 +418,6 @@ export const OfficeScene = () => (
         </g>
 
         <rect x="0" y="0" width="140" height="600" fill="url(#j-edge-l)" />
+        <Ground fill="#141216" />
     </svg>
 );

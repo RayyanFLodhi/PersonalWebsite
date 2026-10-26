@@ -29,8 +29,10 @@
 
     position: sticky;
     top: 0;
+    /* dvh, not svh: a 100svh stage leaves a strip of page background under the video once a phone's
+       address bar collapses and the real viewport grows. */
     height: 100vh;
-    height: 100svh;
+    height: 100dvh;
     overflow: hidden;
     background: var(--background);
     isolation: isolate;
@@ -58,7 +60,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: max(100%, 177.78svh);
+    width: max(100%, 177.78dvh);
     height: max(100%, 56.25vw);
     transform: translate(-50%, -50%) scale(1.45);
     border: 0;
@@ -79,8 +81,26 @@
     transition: opacity 0.9s ease;
 }
 
-.playing {
+.frame[data-video='playing'] .player {
     opacity: 1;
+}
+
+/* No video on this device: keep the poster wash but let it drift so the hero isn't a still frame. */
+.frame[data-video='fallback'] .player {
+    display: none;
+}
+
+.frame[data-video='fallback'] .poster {
+    animation: posterDrift 26s ease-in-out infinite alternate;
+}
+
+@keyframes posterDrift {
+    from {
+        transform: translate(-50%, -50%) scale(1.6);
+    }
+    to {
+        transform: translate(-52%, -48%) scale(1.75);
+    }
 }
 
 .overlay {
@@ -139,7 +159,9 @@
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: center;
+    /* `safe` falls back to top-alignment when the copy is taller than a short phone viewport */
+    align-items: safe center;
+    padding: 5rem 0 3.5rem;
 }
 
 .stage[data-phase='intro'] .copy {
@@ -347,6 +369,17 @@
         align-items: center;
     }
 
+    .summary {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .stats {
+        margin-top: 2rem;
+        padding-top: 1.25rem;
+    }
+
     .actions {
         justify-content: center;
     }
@@ -366,9 +399,39 @@
     }
 }
 
+/* Short viewports (landscape phones, small tablets in split view): the pitch must fit in one screen. */
+@media (max-height: 700px) {
+    .copy {
+        padding-top: 4.5rem;
+    }
+
+    .tagline {
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        margin-bottom: 0.75rem;
+    }
+
+    .summary {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1.1rem;
+    }
+
+    .stats {
+        display: none;
+    }
+
+    .cue {
+        display: none;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .wrapper {
         height: auto;
+    }
+
+    .frame[data-video='fallback'] .poster {
+        animation: none;
     }
 
     .stage {
