@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Documents/GitHub/PersonalWebsite/src/components/Reveal.module.css"],"sourcesContent":[".reveal {\n    opacity: 0;\n    transform: translateY(28px);\n    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);\n    will-change: opacity, transform;\n}\n\n.shown {\n    opacity: 1;\n    transform: none;\n}\n\n@media (prefers-reduced-motion: reduce) {\n    .reveal {\n        opacity: 1;\n        transform: none;\n        transition: none;\n    }\n}\n"],"names":[],"mappings":"AAAA;;;;;;;AAOA;;;;;AAKA;EACI"}}]
-}

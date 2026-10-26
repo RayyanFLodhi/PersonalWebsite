@@ -43,24 +43,80 @@ export const MarsScene = () => (
         <ellipse cx="860" cy="542" rx="40" ry="12" fill="#110705" />
         <ellipse cx="560" cy="566" rx="18" ry="6" fill="#110705" />
 
-        {/* rover: six wheels on a rocker-bogie, mast camera, and the robotic arm */}
+        {/* everything rover-related sits in one wrapper so phones can shrink and recentre it in CSS */}
+        <g className={styles.rover}>
+        {/* ground shadow under the rover */}
+        <ellipse cx="572" cy="508" rx="122" ry="7" fill="#110705" />
+        {/* the rock the arm is reaching for */}
+        <ellipse cx="712" cy="503" rx="13" ry="6.5" fill="#2a130d" />
+        <path d="M702 501 Q710 494 722 500" fill="none" stroke="#5a2e1c" strokeWidth="1.2" />
+
+        {/* rover: rocker-bogie suspension, chassis with solar deck, mast cameras, high-gain dish, and a
+            3-link arm. Everything static lives in one translated group; the forearm is animated, so it is
+            drawn in absolute coordinates (CSS transforms would clobber a transform attribute). */}
         <g transform="translate(560 468)">
-            <g className={styles.line}>
-                <path d="M-60 22 L-30 -4 L0 26 L30 -4 L60 22" />
-                <circle cx="-60" cy="22" r="16" />
-                <circle cx="0" cy="26" r="16" />
-                <circle cx="60" cy="22" r="16" />
-                <rect x="-72" y="-32" width="144" height="30" rx="5" />
-                <rect x="-66" y="-40" width="70" height="8" rx="2" />
-                <path d="M-30 -40 L-30 -66" />
-                <rect x="-46" y="-80" width="34" height="14" rx="3" />
-                <path d="M60 -24 L100 -60 L142 -32" />
-                <path d="M142 -32 L154 -20 M142 -32 L132 -18" />
+            {/* suspension linkage sits behind the wheels */}
+            <g className={styles.line} strokeWidth="2.4">
+                <path d="M62 22 L14 -10 L-30 2" />
+                <path d="M-62 22 L-30 2 L2 22" />
             </g>
-            <circle cx="100" cy="-60" r="3.5" className={styles.node} />
-            <circle cx="142" cy="-32" r="3.5" className={styles.node} />
-            <circle cx="60" cy="-24" r="3.5" className={styles.node} />
-            <circle cx="-22" cy="-73" r="3" className={styles.beacon} />
+            {[-62, 2, 62].map((x) => (
+                <g key={x} transform={`translate(${x} 22)`}>
+                    <circle r="17" className={styles.line} />
+                    <circle r="13.5" className={styles.tread} />
+                    <circle r="8" className={styles.line} />
+                    <path d="M0 -8 L0 8 M-8 0 L8 0 M-5.7 -5.7 L5.7 5.7 M-5.7 5.7 L5.7 -5.7" className={styles.spoke} />
+                    <circle r="2.6" className={styles.node} />
+                </g>
+            ))}
+            <circle cx="14" cy="-10" r="3" className={styles.node} />
+            <circle cx="-30" cy="2" r="3" className={styles.node} />
+
+            <g className={styles.line}>
+                {/* chassis with a chamfered nose */}
+                <path d="M-80 -34 Q-80 -38 -76 -38 L62 -38 L84 -24 L84 -8 Q84 -4 80 -4 L-76 -4 Q-80 -4 -80 -8Z" />
+                <path d="M-70 -21 L56 -21" className={styles.seam} />
+                {/* solar deck + electronics box */}
+                <rect x="-74" y="-46" width="104" height="8" rx="1.5" className={styles.panel} />
+                <path d="M-48 -46 L-48 -38 M-22 -46 L-22 -38 M4 -46 L4 -38" className={styles.seam} />
+                <rect x="-8" y="-58" width="24" height="12" rx="2" />
+                {/* mast with a stereo camera head */}
+                <path d="M-40 -46 L-40 -82" />
+                <rect x="-58" y="-98" width="36" height="16" rx="3" />
+                <circle cx="-49" cy="-90" r="3.4" />
+                <circle cx="-31" cy="-90" r="3.4" />
+                {/* high-gain dish on a short stem */}
+                <path d="M-66 -46 L-66 -54" />
+                <path d="M-78 -66 A12 12 0 0 0 -54 -66 Z" />
+                <path d="M-66 -66 L-66 -74" />
+                {/* whip antenna with a pennant */}
+                <path d="M66 -35 L76 -76" />
+                {/* arm turret + upper arm (shoulder at 50,-50; elbow at 92,-88) */}
+                <rect x="38" y="-50" width="24" height="12" rx="2" />
+                <rect x="0" y="-4.5" width="57" height="9" rx="4.5" transform="translate(50 -50) rotate(-42)" />
+            </g>
+            <path d="M76 -76 L87 -72 L76 -68Z" className={styles.flag} />
+            <circle cx="-49" cy="-90" r="1.5" className={styles.node} />
+            <circle cx="-31" cy="-90" r="1.5" className={styles.node} />
+            <circle cx="-66" cy="-75" r="2" className={styles.node} />
+            <circle cx="-26" cy="-101" r="2.6" className={styles.beacon} />
+            <circle cx="50" cy="-50" r="5" className={styles.line} />
+            <circle cx="50" cy="-50" r="2.2" className={styles.node} />
+        </g>
+
+        {/* forearm + wrist + gripper: rotates slowly about the elbow (652,380) */}
+        <g className={styles.reach}>
+            <g className={styles.line}>
+                <rect x="0" y="-4.5" width="70" height="9" rx="4.5" transform="translate(652 380) rotate(62)" />
+                <path d="M678 446 L692 438" strokeWidth="3" />
+                <path d="M678 446 L688.3 465.4 L692.7 463" />
+                <path d="M692 438 L702.3 457.4 L697.9 459.7" />
+            </g>
+            <circle cx="685" cy="442" r="4.5" className={styles.line} />
+            <circle cx="685" cy="442" r="2" className={styles.node} />
+        </g>
+        <circle cx="652" cy="380" r="5" className={styles.line} />
+        <circle cx="652" cy="380" r="2.2" className={styles.node} />
         </g>
 
         {/* wheel tracks leading in */}

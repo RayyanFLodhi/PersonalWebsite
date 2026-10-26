@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# accidental nested copy of the repo build output (delete the folder; this keeps it out of git)
+/Documents/

@@ -58,10 +58,14 @@
     gap: 1.25rem;
 }
 
+/* Logo sits at the far right of the header so the title, pill and bullets share one left edge
+   whether or not a role has a logo. */
 .logoContainer {
+    order: 2;
+    margin-left: auto;
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     /* background: white; Removed to fix white box issue */
     /* Ensure logos are visible if transparent */
     border-radius: 12px;
@@ -169,14 +173,6 @@
     margin-bottom: 0.35rem;
 }
 
-.companyCluster {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.5rem;
-    min-width: 0;
-}
-
 .company {
     font-size: 1.1rem;
     color: var(--primary);
@@ -187,11 +183,6 @@
     color: var(--secondary-foreground);
     font-weight: 500;
     user-select: none;
-}
-
-.location {
-    font-size: 0.95rem;
-    color: var(--secondary-foreground);
 }
 
 .date {
@@ -249,6 +240,16 @@
     .header {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .logoContainer {
+        order: 0;
+        margin-left: 0;
+    }
+
+    /* company and period stack on narrow cards; the dot between them has nothing to separate */
+    .clusterSep {
+        display: none;
     }
 
     .titleRow {

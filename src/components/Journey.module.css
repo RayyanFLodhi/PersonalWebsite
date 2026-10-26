@@ -290,6 +290,36 @@
     fill: var(--primary);
 }
 
+.tread {
+    fill: none;
+    stroke: rgba(230, 230, 234, 0.5);
+    stroke-width: 1.2;
+    stroke-dasharray: 2.5 3.5;
+}
+
+.spoke {
+    fill: none;
+    stroke: rgba(230, 230, 234, 0.6);
+    stroke-width: 1.2;
+}
+
+.seam {
+    fill: none;
+    stroke: rgba(230, 230, 234, 0.28);
+    stroke-width: 1;
+}
+
+.flag {
+    fill: var(--accent);
+}
+
+/* The rover's forearm settles toward the rock and back, slowly */
+.reach {
+    transform-box: view-box;
+    transform-origin: 652px 380px;
+    animation: j-reach 7s ease-in-out infinite;
+}
+
 .beacon {
     fill: var(--accent);
     animation: j-blink 1.6s ease-in-out infinite;
@@ -428,6 +458,16 @@
     }
 }
 
+@keyframes j-reach {
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-7deg);
+    }
+}
+
 @keyframes j-bob {
     0%,
     100% {
@@ -458,6 +498,7 @@
 .stage[data-visible='false'] .geo,
 .stage[data-visible='false'] .sweep,
 .stage[data-visible='false'] .bob,
+.stage[data-visible='false'] .reach,
 .stage[data-visible='false'] .cursor,
 .stage[data-visible='false'] .steam {
     animation-play-state: paused;
@@ -468,6 +509,14 @@
 @media (max-width: 768px) {
     .wrapper {
         height: 420svh;
+    }
+
+    /* The Mars art is cropped hard on phones (~280 viewBox units visible) and the caption covers the
+       ground, so the rover is shrunk about its contact point and parked on the far ridge instead. */
+    .rover {
+        transform-box: view-box;
+        transform-origin: 560px 507px;
+        transform: translate(-60px, -112px) scale(0.5);
     }
 
     .heading {
@@ -586,6 +635,7 @@
     .geo,
     .sweep,
     .bob,
+    .reach,
     .cursor,
     .steam {
         animation: none;

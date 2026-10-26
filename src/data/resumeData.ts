@@ -89,6 +89,7 @@ export const resumeData = {
     {
       role: "Systems Engineering Intern",
       company: "Telesat",
+      logo: "/logos/telesat.png",
       location: "Ottawa, ON",
       period: "Jan 2027 – Apr 2027",
       website: "https://www.telesat.com",
@@ -102,6 +103,7 @@ export const resumeData = {
     {
       role: "Software Research Assistant",
       company: "Computational Analysis & Research Group, uOttawa",
+      logo: "/logos/uottawa.png",
       location: "Ottawa, ON (Hybrid)",
       period: "Sept 2026 – Present",
       website: "https://www.uottawa.ca/faculty-engineering/",
@@ -114,6 +116,7 @@ export const resumeData = {
     {
       role: "Software & Data Engineer (Statistical Programmer)",
       company: "Statistics Canada",
+      logo: "/logos/statcan.png",
       location: "Toronto, ON",
       period: "May 2026 – Aug 2026",
       website: "https://www.statcan.gc.ca",
@@ -200,8 +203,8 @@ export const resumeData = {
     {
       scene: "mars",
       kicker: "01 · Mars yard",
-      title: "Building a rover arm",
-      body: "ROS2 motor control, IMU telemetry and C++ inverse-kinematics firmware on uORover. 8th internationally at CIRC and 1st at the Quebec Rover Challenge.",
+      title: "Driving a Mars rover",
+      body: "LiDAR depth maps in ROS2 and RViz, robotic-arm control over ROS2 pub/sub, and Arduino firmware for the motors and sensors on uORover. 1st at QRC 2026 and Safest Team at CIRC 2026.",
       cta: { label: "Meet the team", href: "#leadership" }
     },
     {
@@ -237,14 +240,24 @@ export const resumeData = {
   ],
   extracurriculars: [
     {
-      title: "Google Developer Group, CEGSC & uOttaHack",
-      role: "President · VP of Sponsorships · Sponsorships Team",
+      title: "Google Developer Group on Campus, uOttawa",
+      role: "President",
       location: "Ottawa, ON",
       period: "May 2026 – Present",
-      image: "/placeholder-project.png",
+      image: "/extracurriculurs/gdg.png",
       description: [
-        "Lead the Google Developer Group at uOttawa and grow the presence of the Computer Engineering Student Council (CEGSC) by running events with partner companies and organizations",
-        "Secure and retain brand sponsors for uOttaHack through outreach, meetings and ongoing sponsor relationships"
+        "Lead the Google Developer Group chapter at uOttawa, running technical events and workshops with partner companies and organizations"
+      ]
+    },
+    {
+      title: "Computer Engineering Student Council (CEGSC)",
+      role: "VP of Sponsorships",
+      location: "Ottawa, ON",
+      period: "May 2026 – Present",
+      image: "/extracurriculurs/cegsc.png",
+      description: [
+        "Grow the council's presence by running events with partner companies and organizations and bringing in sponsors",
+        "Also on the uOttaHack sponsorships team: secure and retain brand sponsors through outreach, meetings and ongoing sponsor relationships"
       ]
     },
     {
@@ -252,12 +265,15 @@ export const resumeData = {
       role: "Robotic Arm / Embedded Sub-team",
       location: "Ottawa, ON",
       period: "Sept 2024 – Present",
-      image: "/extracurriculurs/uorover.png",
-      highlight: "8th internationally at CIRC · 1st at Quebec Rover Challenge",
+      image: "/extracurriculurs/qrc-2026.jpg",
+      highlight: "1st at QRC 2026 · Safest Team at CIRC 2026",
       description: [
-        "Placed 8th internationally at the Canadian International Rover Challenge and 1st at the Quebec Rover Challenge",
-        "Developed ROS2 (Python) motor-control and telemetry systems for rover actuators and IMU",
-        "Wrote Arduino/C++ firmware for robotic-arm actuators with inverse kinematics"
+        "Autonomy, arm control and embedded firmware for a competition Mars rover: 1st place at the Quebec Rover Challenge (2026), Safest Team at the Canadian International Rover Challenge (2026) and Best Improved Team at CIRC (2025)",
+        "Integrated LiDAR sensor data with ROS2 and RViz, creating depth-perception maps for autonomous navigation",
+        "Designed, refactored and implemented robotic-arm controls through ROS2 pub/sub (Python)",
+        "Improved embedded firmware for motors, sensors and actuators on Arduino, including GPIO interfacing and timing-sensitive control logic (C++)",
+        "Experimented with re-mapping device order and operator control modes; bench-tested motor torque, speed and efficiency before integrating on the rover",
+        "Worked across Ubuntu in Oracle VirtualBox, Windows Subsystem for Linux and Docker containers"
       ]
     },
     {
@@ -272,6 +288,23 @@ export const resumeData = {
     }
   ],
   projects: [
+    {
+      title: "VitaSpectra",
+      role: "Hands-free patient vitals HUD · 1st place, Civic Challenge, Hack the Hill 3",
+      location: "Ottawa, ON",
+      period: "September 2026",
+      image: "/projects/vitaspectra.jpg",
+      website: "https://github.com/Team-VitaSpectra/VitaSpectra",
+      highlight: "1st place in the Civic Challenge · heart rate within ±5 BPM",
+      description: [
+        "Won 1st place in the Civic Challenge, one of the two major tracks at Hack the Hill 3, with Aashir Alam, Muhammad Sheikh and Trevor Choi",
+        "Built a hands-free heads-up display that overlays live patient information into an EMS responder's field of view, using a camera, Presage contactless sensing, a Raspberry Pi and VR glasses",
+        "Shows heart rate, breathing rate, arterial pressure and live waveforms, with heart rate accurate to within ±5 BPM",
+        "Lets a responder keep assessing and treating a patient while receiving physiological data in real time; the same system could let hospital staff passively monitor patients and surface changes sooner",
+        "Combined embedded systems, computer vision, real-time sensing, hardware and human-computer interaction into one working device"
+      ],
+      techCheck: ["Raspberry Pi 5", "Presage SmartSpectra SDK", "C++", "Node.js", "Electron", "Computer Vision"]
+    },
     {
       title: "Vision-Based Concrete Crack Growth Monitoring",
       role: "Deep Learning Segmentation + Structural Validation",
@@ -300,25 +333,8 @@ export const resumeData = {
         "Developed an on-device OpenCV and TensorFlow Lite object-detection pipeline with backend APIs"
       ],
       techCheck: ["QNX RTOS", "Raspberry Pi 5", "OpenCV", "TensorFlow Lite", "TCP/IP", "Python"]
-    },
-    {
-      title: "LockSmith.AI",
-      role: "ML Engineer & Backend Developer · uOttaHack 7",
-      location: "Ottawa, ON",
-      period: "January 2025",
-      image: "/projects/locksmith-ai.png",
-      website: "https://locksmith-ai.onrender.com/",
-      highlight: "1M+ records analysed",
-      description: [
-        "Built a password-strength detector at uOttaHack 7 to help users understand and improve their password security",
-        "Developed a Random Forest model to analyse password strength with robust accuracy",
-        "Managed ingestion of 1 million+ records with SQLite and a Flask backend",
-        "Integrated Groq API for secondary ratings and stronger password suggestions, plus a data-breach checker"
-      ],
-      techCheck: ["Python", "Flask", "Machine Learning", "Random Forest", "Groq API", "Cybersecurity"]
     }
   ],
-  leadership: [], // Deprecated, strictly using categories below
   highSchoolInitiatives: [
     {
       title: "SickKids Hospital Foundation",
@@ -333,22 +349,16 @@ export const resumeData = {
       ]
     },
     {
-      title: "Relay For Life",
-      role: "Cancer Survivor Speaker & Executive",
-      location: "Ontario",
-      period: "Feb 2023 – Present",
-      image: "/placeholder-project.png",
-      highlight: "Keynotes to 1000+ attendees",
-      description: ["Delivered keynote speeches to 1000+ attendees and supported logistics for large-scale Relay For Life events"]
-    },
-    {
-      title: "Make-A-Wish & Great Cycle Challenge",
-      role: "Ambassador",
+      title: "Relay For Life, Make-A-Wish & Great Cycle Challenge",
+      role: "Cancer Survivor Speaker, Executive & Ambassador",
       location: "Ontario",
       period: "2022 – Present",
       image: "/placeholder-project.png",
-      highlight: "$5,000+ raised",
-      description: ["Raised $5,000+ through community-led initiatives; cycle annually and promote the cause via social media"]
+      highlight: "Keynotes to 1000+ attendees · $5,000+ raised",
+      description: [
+        "Delivered keynote speeches to 1000+ attendees and supported logistics for large-scale Relay For Life events",
+        "Raised $5,000+ for Make-A-Wish and the Great Cycle Challenge through community-led initiatives; cycle annually and promote the cause via social media"
+      ]
     },
     {
       title: "PDSB Middle School Hackathon (AI Workshop)",
@@ -393,11 +403,11 @@ export const resumeData = {
       description: "Currently hold Reliability Status security clearance with the Government of Canada."
     },
     {
-      title: "1st Place – Hack the Hill",
+      title: "1st Place – Hack the Hill 3 (Civic Challenge)",
       organization: "Hack the Hill, Ottawa",
       year: "2026",
       image: "/placeholder-project.png",
-      description: "Built a device for EMS services to monitor patient heart rate in the field, taking first place overall."
+      description: "VitaSpectra, a hands-free HUD that puts live patient vitals in an EMS responder's field of view, won the Civic Challenge track at Hack the Hill 3."
     },
     {
       title: "1st Place Community Service Award",
