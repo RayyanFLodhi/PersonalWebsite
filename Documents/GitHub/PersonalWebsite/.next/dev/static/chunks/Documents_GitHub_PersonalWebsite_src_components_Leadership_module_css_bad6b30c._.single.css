@@ -1,0 +1,251 @@
+/* [project]/Documents/GitHub/PersonalWebsite/src/components/Leadership.module.css [app-client] (css) */
+.Leadership-module__wGbELa__team {
+  border: 1px solid var(--border);
+  cursor: pointer;
+  height: 100%;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background: #ffffff08;
+  border-radius: 12px;
+  grid-template-columns: 150px minmax(0, 1fr);
+  display: grid;
+  overflow: hidden;
+}
+
+.Leadership-module__wGbELa__team:hover {
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px #00000059;
+}
+
+.Leadership-module__wGbELa__teamMedia {
+  border-right: 1px solid var(--border);
+  background: linear-gradient(160deg, #3b82f638, #8b5cf638);
+  justify-content: center;
+  align-items: center;
+  min-height: 180px;
+  display: flex;
+  position: relative;
+}
+
+.Leadership-module__wGbELa__teamMedia img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--transition-medium);
+  position: absolute;
+  inset: 0;
+}
+
+.Leadership-module__wGbELa__team:hover .Leadership-module__wGbELa__teamMedia img {
+  transform: scale(1.04);
+}
+
+.Leadership-module__wGbELa__monogram {
+  font-family: var(--font-heading);
+  letter-spacing: .04em;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.Leadership-module__wGbELa__teamBody {
+  flex-direction: column;
+  gap: .45rem;
+  padding: 1.25rem 1.35rem;
+  display: flex;
+}
+
+.Leadership-module__wGbELa__teamTop {
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  display: flex;
+}
+
+.Leadership-module__wGbELa__teamTitle {
+  color: var(--foreground);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.Leadership-module__wGbELa__teamPeriod {
+  color: var(--secondary-foreground);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: .78rem;
+}
+
+.Leadership-module__wGbELa__teamRole {
+  color: var(--accent);
+  font-size: .88rem;
+  font-weight: 500;
+}
+
+.Leadership-module__wGbELa__pill {
+  color: var(--foreground);
+  background: linear-gradient(90deg, #3b82f61a, #8b5cf61a);
+  border: 1px solid #8b5cf659;
+  border-radius: 100px;
+  align-self: flex-start;
+  padding: .28rem .75rem;
+  font-size: .78rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.Leadership-module__wGbELa__teamSummary {
+  color: var(--secondary-foreground);
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: .92rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.Leadership-module__wGbELa__more {
+  color: var(--secondary-foreground);
+  transition: color var(--transition-fast);
+  margin-top: auto;
+  padding-top: .5rem;
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.Leadership-module__wGbELa__team:hover .Leadership-module__wGbELa__more {
+  color: var(--primary);
+}
+
+.Leadership-module__wGbELa__ledger {
+  border-top: 1px solid var(--border);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+}
+
+.Leadership-module__wGbELa__rowItem {
+  border-bottom: 1px solid var(--border);
+}
+
+.Leadership-module__wGbELa__row {
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem .6rem;
+  display: grid;
+}
+
+.Leadership-module__wGbELa__row:hover, .Leadership-module__wGbELa__row:focus-visible {
+  background: #ffffff08;
+  outline: none;
+}
+
+.Leadership-module__wGbELa__thumb {
+  border: 1px solid var(--border);
+  background: #ffffff0a;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  overflow: hidden;
+}
+
+.Leadership-module__wGbELa__thumb img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.Leadership-module__wGbELa__rowIndex {
+  font-family: var(--font-heading);
+  letter-spacing: .08em;
+  color: var(--secondary-foreground);
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.Leadership-module__wGbELa__rowText {
+  flex-direction: column;
+  gap: .2rem;
+  min-width: 0;
+  display: flex;
+}
+
+.Leadership-module__wGbELa__rowTitle {
+  color: var(--foreground);
+  font-size: .98rem;
+  font-weight: 600;
+}
+
+.Leadership-module__wGbELa__rowMeta {
+  color: var(--secondary-foreground);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .8rem;
+  overflow: hidden;
+}
+
+.Leadership-module__wGbELa__rowPill {
+  margin-top: .3rem;
+  padding: .2rem .6rem;
+  font-size: .72rem;
+}
+
+.Leadership-module__wGbELa__chevron {
+  color: var(--secondary-foreground);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.Leadership-module__wGbELa__row:hover .Leadership-module__wGbELa__chevron, .Leadership-module__wGbELa__row:focus-visible .Leadership-module__wGbELa__chevron {
+  color: var(--primary);
+  transform: translateX(4px);
+}
+
+@media (max-width: 900px) {
+  .Leadership-module__wGbELa__ledger {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .Leadership-module__wGbELa__team {
+    grid-template-columns: 1fr;
+  }
+
+  .Leadership-module__wGbELa__teamMedia {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    min-height: 150px;
+  }
+
+  .Leadership-module__wGbELa__rowMeta {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Leadership-module__wGbELa__team, .Leadership-module__wGbELa__teamMedia img, .Leadership-module__wGbELa__row, .Leadership-module__wGbELa__chevron, .Leadership-module__wGbELa__more {
+    transition: none;
+  }
+}
+
+/*# sourceMappingURL=Documents_GitHub_PersonalWebsite_src_components_Leadership_module_css_bad6b30c._.single.css.map*/

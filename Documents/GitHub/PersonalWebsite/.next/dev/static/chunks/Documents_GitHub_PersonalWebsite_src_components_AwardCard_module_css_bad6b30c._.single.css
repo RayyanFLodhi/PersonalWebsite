@@ -1,0 +1,97 @@
+/* [project]/Documents/GitHub/PersonalWebsite/src/components/AwardCard.module.css [app-client] (css) */
+.AwardCard-module__dn6Pnq__card {
+  border: 1px solid var(--border);
+  cursor: pointer;
+  height: 100%;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  background: #ffffff05;
+  border-radius: 12px;
+  flex-direction: column;
+  gap: .4rem;
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  position: relative;
+}
+
+.AwardCard-module__dn6Pnq__card:hover {
+  border-color: var(--primary);
+  background: #ffffff0a;
+  transform: translateY(-4px);
+}
+
+.AwardCard-module__dn6Pnq__top {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: .35rem;
+  display: flex;
+}
+
+.AwardCard-module__dn6Pnq__year {
+  font-family: var(--font-heading);
+  letter-spacing: .14em;
+  color: var(--primary);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.AwardCard-module__dn6Pnq__kind {
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: .15rem .55rem;
+  font-size: .66rem;
+  font-weight: 600;
+}
+
+.AwardCard-module__dn6Pnq__kindCert {
+  color: var(--accent);
+  border-color: #8b5cf666;
+}
+
+.AwardCard-module__dn6Pnq__title {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.AwardCard-module__dn6Pnq__org {
+  color: var(--secondary-foreground);
+  font-size: .82rem;
+}
+
+.AwardCard-module__dn6Pnq__description {
+  color: var(--secondary-foreground);
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-top: .3rem;
+  font-size: .86rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.AwardCard-module__dn6Pnq__imageContainer {
+  margin-top: auto;
+  padding-top: .75rem;
+}
+
+.AwardCard-module__dn6Pnq__image {
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .AwardCard-module__dn6Pnq__card {
+    transition: none;
+  }
+}
+
+/*# sourceMappingURL=Documents_GitHub_PersonalWebsite_src_components_AwardCard_module_css_bad6b30c._.single.css.map*/

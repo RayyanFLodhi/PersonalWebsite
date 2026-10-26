@@ -1,33 +1,67 @@
 /* ExperienceCard.module.css */
 
 .card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    transition: transform var(--transition-fast), border-color var(--transition-fast);
+    padding: 1.6rem 1.75rem;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
     cursor: pointer;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateX(6px);
     border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Not started yet: a quiet violet tint so it reads as "next", not "now" */
+.cardUpcoming {
+    border-style: dashed;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.07), rgba(255, 255, 255, 0.02) 60%);
+}
+
+.upcoming {
+    color: var(--accent);
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.upcomingDot {
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent-glow);
+    animation-name: breathe-accent;
+}
+
+@keyframes breathe-accent {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 var(--accent-glow);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(139, 92, 246, 0);
+    }
+}
+
+.moreNote {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--secondary-foreground);
 }
 
 .header {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
-    gap: 1.5rem;
+    margin-bottom: 1.1rem;
+    gap: 1.25rem;
 }
 
 .logoContainer {
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     /* background: white; Removed to fix white box issue */
     /* Ensure logos are visible if transparent */
     border-radius: 12px;
@@ -58,10 +92,73 @@
 }
 
 .role {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: var(--foreground);
     margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+/* Quiet "this is ongoing" marker: a small pill with a breathing dot */
+.current {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--secondary-foreground);
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.currentDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 0 var(--primary-glow);
+    animation: breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 var(--primary-glow);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(59, 130, 246, 0);
+    }
+}
+
+/* The one number a recruiter should walk away with */
+.highlight {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 100px;
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .currentDot,
+    .upcomingDot {
+        animation: none;
+    }
+
+    .card {
+        transition: none;
+    }
 }
 
 .companyRow {
@@ -125,18 +222,27 @@
 }
 
 .description {
-    list-style-position: inside;
+    list-style: none;
     color: var(--secondary-foreground);
-    margin-top: 1rem;
+    font-size: 0.95rem;
 }
 
 .description li {
-    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1rem;
+    margin-bottom: 0.45rem;
     line-height: 1.6;
 }
 
-.description li::marker {
-    color: var(--primary);
+.description li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
 }
 
 @media (max-width: 600px) {
@@ -146,15 +252,11 @@
     }
 
     .titleRow {
-        flex-direction: column;
-        align-items: flex-start;
         gap: 0.5rem;
     }
 
-    .companyRow {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.35rem;
+    .role {
+        font-size: 1.15rem;
     }
 
     .companyRow .date {

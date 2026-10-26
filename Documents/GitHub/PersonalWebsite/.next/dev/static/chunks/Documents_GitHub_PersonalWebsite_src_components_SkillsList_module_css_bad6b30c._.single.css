@@ -1,0 +1,43 @@
+/* [project]/Documents/GitHub/PersonalWebsite/src/components/SkillsList.module.css [app-client] (css) */
+.SkillsList-module__0JkKDG__grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  display: grid;
+}
+
+.SkillsList-module__0JkKDG__category {
+  border: 1px solid var(--border);
+  background: #ffffff05;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.SkillsList-module__0JkKDG__categoryTitle {
+  color: var(--primary);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  font-size: 1.1rem;
+}
+
+.SkillsList-module__0JkKDG__skills {
+  flex-wrap: wrap;
+  gap: .75rem;
+  display: flex;
+}
+
+.SkillsList-module__0JkKDG__skill {
+  color: var(--foreground);
+  transition: all var(--transition-fast);
+  background: #ffffff0d;
+  border-radius: 6px;
+  padding: .4rem .8rem;
+  font-size: .9rem;
+}
+
+.SkillsList-module__0JkKDG__skill:hover {
+  background: var(--primary-glow);
+  color: #fff;
+}
+
+/*# sourceMappingURL=Documents_GitHub_PersonalWebsite_src_components_SkillsList_module_css_bad6b30c._.single.css.map*/

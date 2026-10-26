@@ -1,157 +1,50 @@
-.aboutContainer {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
-  gap: clamp(2rem, 4vw, 3.5rem);
-  /* stretch (default): one row height so photo + text can align vertically */
-  align-items: stretch;
-}
-
-.aboutPhotos {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.photoWrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: transform var(--transition-normal);
-  flex-shrink: 0;
-}
-
-.photoWrapper:hover {
-  transform: translateY(-5px);
-}
-
-.photo1,
-.photo2 {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 12px;
-}
-
-.photo2 {
-  margin-left: 2rem;
-}
-
-.aboutContent {
-  font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.05rem);
-  line-height: 1.65;
-  color: var(--secondary-foreground);
-}
-
-.introSection {
-  margin-bottom: 1.25rem;
-  padding: 1.35rem 1.35rem 1.35rem 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border-left: 3px solid var(--primary);
-  border-radius: 8px;
-}
-
-.introHeading {
-  color: var(--primary);
-  font-size: clamp(1.35rem, 1.15rem + 0.55vw, 1.6rem);
-  margin-bottom: 0.65rem;
-  font-family: var(--font-heading);
-}
-
-.introText {
-  line-height: 1.65;
-  font-size: 1em;
-  color: var(--foreground);
-}
-
-.backgroundSection {
-  margin-bottom: 3rem;
-}
-
-.sectionHeading {
-  color: var(--foreground);
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-family: var(--font-heading);
-}
-
-.text {
-  margin-bottom: 2rem;
-  line-height: 1.8;
-}
-
-.education {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-}
-
-.education .sectionHeading {
-  font-size: clamp(1.2rem, 1.05rem + 0.4vw, 1.38rem);
-  margin-bottom: 0.75rem;
-}
-
-.eduItem {
-  margin-bottom: 1.35rem;
-}
-
-.eduItem:last-child {
-  margin-bottom: 0;
-}
-
-.eduHeader {
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-.eduHeader .degree {
-  margin-right: 0.5rem;
-}
-
-.degree {
-  color: var(--primary);
-}
-
-.year {
-  color: var(--secondary-foreground);
-}
-
-.school {
-  color: var(--foreground);
-  margin-bottom: 0.5rem;
-}
-
-.eduDetails {
-  list-style-position: inside;
-  font-size: 0.92em;
-  line-height: 1.55;
-}
-
-/* Desktop: shared row height + vertical centering so copy lines up with the portrait */
-@media (min-width: 769px) {
-  .aboutPhotos {
-    justify-content: center;
-    min-height: 100%;
-  }
-
-  .aboutContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100%;
-  }
-}
-
 .darkSection {
   background: rgba(255, 255, 255, 0.01);
 }
 
+/* Same pill as the cards so the modal reads as a zoomed-in card */
+.modalHighlight {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 100px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+  color: var(--foreground);
+}
+
+/* Reveal wrappers inside grids must pass the row height through to the card */
+.revealItem {
+  height: 100%;
+}
+
 .projectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 1.5rem;
+}
+
+/* The featured project spans the row; its Reveal wrapper has to as well */
+.revealFeatured {
+  grid-column: 1 / -1;
+}
+
+.teamsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
+  gap: 1.5rem;
+}
+
+.awardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  gap: 1rem;
+}
+
+.subHeadingSpaced {
+  margin-top: 3.5rem;
 }
 
 .subHeading {
@@ -194,28 +87,7 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .aboutContainer {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .aboutPhotos {
-    order: 2;
-  }
-
-  .aboutContent {
-    order: 1;
-  }
-
-  .photo2 {
-    margin-left: 0;
-  }
-
-  .introSection {
-    padding: 1.5rem;
-  }
-
-  .introHeading {
-    font-size: 1.5rem;
+  .subHeadingSpaced {
+    margin-top: 2.5rem;
   }
 }

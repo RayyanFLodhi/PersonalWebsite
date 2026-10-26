@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Documents/GitHub/PersonalWebsite/src/components/SkillsList.module.css"],"sourcesContent":[".grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n    gap: 2rem;\r\n}\r\n\r\n.category {\r\n    background: rgba(255, 255, 255, 0.02);\r\n    border: 1px solid var(--border);\r\n    border-radius: 12px;\r\n    padding: 1.5rem;\r\n}\r\n\r\n.categoryTitle {\r\n    font-size: 1.1rem;\r\n    color: var(--primary);\r\n    margin-bottom: 1rem;\r\n    border-bottom: 1px solid var(--border);\r\n    padding-bottom: 0.5rem;\r\n}\r\n\r\n.skills {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    gap: 0.75rem;\r\n}\r\n\r\n.skill {\r\n    font-size: 0.9rem;\r\n    color: var(--foreground);\r\n    background: rgba(255, 255, 255, 0.05);\r\n    padding: 0.4rem 0.8rem;\r\n    border-radius: 6px;\r\n    transition: all var(--transition-fast);\r\n}\r\n\r\n.skill:hover {\r\n    background: var(--primary-glow);\r\n    color: white;\r\n}"],"names":[],"mappings":"AAAA;;;;;;AAMA;;;;;;;AAOA;;;;;;;;AAQA;;;;;;AAMA;;;;;;;;;AASA"}}]
+}

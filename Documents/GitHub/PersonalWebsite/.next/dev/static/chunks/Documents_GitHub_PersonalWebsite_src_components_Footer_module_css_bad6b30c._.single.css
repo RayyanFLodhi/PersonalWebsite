@@ -1,0 +1,50 @@
+/* [project]/Documents/GitHub/PersonalWebsite/src/components/Footer.module.css [app-client] (css) */
+.Footer-module__1REqpW__footer {
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  margin-top: 4rem;
+  padding: 4rem 0 2rem;
+}
+
+.Footer-module__1REqpW__footerContainer {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  display: flex;
+}
+
+.Footer-module__1REqpW__name {
+  font-family: var(--font-heading);
+  color: var(--foreground);
+  margin-bottom: .5rem;
+  font-size: 1.5rem;
+}
+
+.Footer-module__1REqpW__tagline {
+  color: var(--secondary-foreground);
+  font-size: .9rem;
+}
+
+.Footer-module__1REqpW__links {
+  gap: 2rem;
+  display: flex;
+}
+
+.Footer-module__1REqpW__link {
+  color: var(--secondary-foreground);
+  transition: color var(--transition-fast);
+}
+
+.Footer-module__1REqpW__link:hover {
+  color: var(--primary);
+}
+
+.Footer-module__1REqpW__copyright {
+  color: var(--secondary-foreground);
+  opacity: .6;
+  margin-top: 2rem;
+  font-size: .8rem;
+}
+
+/*# sourceMappingURL=Documents_GitHub_PersonalWebsite_src_components_Footer_module_css_bad6b30c._.single.css.map*/

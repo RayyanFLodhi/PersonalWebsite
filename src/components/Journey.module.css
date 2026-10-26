@@ -1,0 +1,593 @@
+/* Journey: a pinned stage whose "world" pans between four scenes as you scroll.
+   Single input is --p (0..1) from JS. The camera path is an L: up from Mars to orbit,
+   diagonally down into the drone airspace, then right into the office. */
+
+.wrapper {
+    position: relative;
+    height: 460svh;
+}
+
+.stage {
+    /* No-JS / reduced-motion fallback: the last chapter. */
+    --p: 1;
+
+    /* Three camera moves (0..1 each) with holds between them, then smoothstepped. */
+    --m1: clamp(0, (var(--p) - 0.12) / 0.24, 1);
+    --m2: clamp(0, (var(--p) - 0.44) / 0.24, 1);
+    --m3: clamp(0, (var(--p) - 0.74) / 0.2, 1);
+    --m1e: calc(var(--m1) * var(--m1) * (3 - 2 * var(--m1)));
+    --m2e: calc(var(--m2) * var(--m2) * (3 - 2 * var(--m2)));
+    --m3e: calc(var(--m3) * var(--m3) * (3 - 2 * var(--m3)));
+
+    /* Camera position in world units. Cells are 100vw x 100svh. */
+    --camx: calc(100vw * (var(--m2e) + var(--m3e)));
+    --camy: calc(100svh * (1 - var(--m1e) + var(--m2e)));
+
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    background: #05060c;
+    isolation: isolate;
+}
+
+/* ---------- layers ---------- */
+
+.stars {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300vw;
+    height: 200svh;
+    transform: translate(calc(var(--camx) * -0.3), calc(var(--camy) * -0.3));
+    background-color: #05060c;
+    background-image:
+        radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.9) 50%, transparent 51%),
+        radial-gradient(1px 1px at 48% 62%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 78% 30%, rgba(255, 255, 255, 0.8) 50%, transparent 51%),
+        radial-gradient(1px 1px at 30% 84%, rgba(255, 255, 255, 0.6) 50%, transparent 51%),
+        radial-gradient(1px 1px at 66% 90%, rgba(255, 255, 255, 0.75) 50%, transparent 51%),
+        radial-gradient(1px 1px at 90% 72%, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 22% 46%, rgba(191, 219, 254, 0.8) 50%, transparent 51%),
+        radial-gradient(1px 1px at 58% 10%, rgba(255, 255, 255, 0.65) 50%, transparent 51%),
+        radial-gradient(120vw 80svh at 40% 25%, rgba(139, 92, 246, 0.1), transparent 70%),
+        radial-gradient(90vw 70svh at 70% 40%, rgba(59, 130, 246, 0.08), transparent 70%);
+    background-size:
+        230px 230px,
+        230px 230px,
+        310px 310px,
+        310px 310px,
+        170px 170px,
+        170px 170px,
+        410px 410px,
+        410px 410px,
+        100% 100%,
+        100% 100%;
+    will-change: transform;
+}
+
+.world {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300vw;
+    height: 200svh;
+    transform: translate(calc(-1 * var(--camx)), calc(-1 * var(--camy)));
+    will-change: transform;
+}
+
+.cell {
+    position: absolute;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.cellOrbit {
+    left: 0;
+    top: 0;
+}
+
+.cellMars {
+    left: 0;
+    top: 100svh;
+    /* Mars drops away once we re-enter the atmosphere elsewhere. */
+    opacity: calc(1 - var(--m2e));
+}
+
+.cellSky {
+    left: 100vw;
+    top: 100svh;
+}
+
+.cellOffice {
+    left: 200vw;
+    top: 100svh;
+}
+
+.art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(5, 6, 12, 0.7) 0%, transparent 22%, transparent 72%, rgba(10, 10, 10, 0.85) 100%),
+        linear-gradient(90deg, rgba(5, 6, 12, 0.35) 0%, transparent 30%);
+}
+
+/* ---------- chrome: heading, captions, rail ---------- */
+
+.heading {
+    position: absolute;
+    top: 6rem;
+    left: clamp(1rem, 6vw, 6rem);
+    pointer-events: none;
+}
+
+.eyebrow {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.headingNote {
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--secondary-foreground);
+    opacity: calc(1 - var(--m1) * 3);
+}
+
+.captions {
+    position: absolute;
+    left: clamp(1rem, 6vw, 6rem);
+    bottom: clamp(4.5rem, 12vh, 9rem);
+    width: min(440px, calc(100vw - 2rem));
+    height: 1px; /* captions are absolutely stacked on this anchor */
+}
+
+.caption {
+    /* visibility window in --p; the first/last run off the ends */
+    --s: -1;
+    --e: 0.22;
+    --v: clamp(0, min((var(--p) - var(--s)) / 0.05, (var(--e) - var(--p)) / 0.05), 1);
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 1.5rem 1.6rem;
+    border-radius: 16px;
+    background: rgba(10, 10, 10, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    opacity: var(--v);
+    transform: translateY(calc((1 - var(--v)) * 18px));
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.caption[data-index='1'] {
+    --s: 0.27;
+    --e: 0.54;
+}
+
+.caption[data-index='2'] {
+    --s: 0.59;
+    --e: 0.84;
+}
+
+.caption[data-index='3'] {
+    --s: 0.89;
+    --e: 2;
+}
+
+.stage[data-chapter='0'] .caption[data-index='0'],
+.stage[data-chapter='1'] .caption[data-index='1'],
+.stage[data-chapter='2'] .caption[data-index='2'],
+.stage[data-chapter='3'] .caption[data-index='3'] {
+    pointer-events: auto;
+}
+
+.kicker {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+}
+
+.body {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--secondary-foreground);
+    margin-bottom: 1.1rem;
+}
+
+.cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--foreground);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding-bottom: 2px;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.cta:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.rail {
+    position: absolute;
+    right: clamp(1rem, 3vw, 2.5rem);
+    top: 50%;
+    transform: translateY(-50%);
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.railDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: height var(--transition-medium), background var(--transition-medium);
+}
+
+.stage[data-chapter='0'] .railDot:nth-child(1),
+.stage[data-chapter='1'] .railDot:nth-child(2),
+.stage[data-chapter='2'] .railDot:nth-child(3),
+.stage[data-chapter='3'] .railDot:nth-child(4) {
+    height: 26px;
+    background: var(--primary);
+    box-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* ---------- SVG part styles ---------- */
+
+.line {
+    fill: #0b0b0e;
+    stroke: #e6e6ea;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.panel {
+    fill: #1e3a8a;
+    stroke: #93c5fd;
+    stroke-width: 1;
+}
+
+.node {
+    fill: var(--primary);
+}
+
+.beacon {
+    fill: var(--accent);
+    animation: j-blink 1.6s ease-in-out infinite;
+}
+
+.track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 3;
+    stroke-dasharray: 8 10;
+}
+
+.ring {
+    fill: none;
+    stroke: rgba(139, 92, 246, 0.35);
+    stroke-width: 1;
+    stroke-dasharray: 4 8;
+}
+
+.label {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 3px;
+    fill: rgba(255, 255, 255, 0.55);
+}
+
+.link {
+    fill: none;
+    stroke: rgba(59, 130, 246, 0.5);
+    stroke-width: 1;
+    stroke-dasharray: 3 6;
+    animation: j-dash 2s linear infinite;
+}
+
+.leoA,
+.leoB,
+.geo {
+    transform-box: view-box;
+    transform-origin: 500px 760px;
+    animation: j-orbit 64s linear infinite;
+}
+
+.leoB {
+    animation-duration: 50s;
+    animation-delay: -21s;
+}
+
+.geo {
+    animation-duration: 150s;
+    animation-delay: -55s;
+}
+
+.sweep {
+    transform-box: view-box;
+    transform-origin: 640px 312px;
+    animation: j-sweep 7s linear infinite;
+}
+
+.bob {
+    animation: j-bob 4.5s ease-in-out infinite;
+}
+
+.fov {
+    fill: none;
+    stroke: rgba(59, 130, 246, 0.45);
+    stroke-width: 1;
+    stroke-dasharray: 2 5;
+}
+
+.target {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.2;
+    stroke-dasharray: 6 4;
+}
+
+.tag {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    fill: var(--primary);
+}
+
+.code {
+    fill: rgba(255, 255, 255, 0.32);
+}
+
+.cursor {
+    animation: j-blink 1s steps(2) infinite;
+}
+
+.chart path {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.chart .chartAlt {
+    stroke: var(--accent);
+}
+
+.steam {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.25);
+    stroke-width: 1.2;
+    animation: j-steam 3s ease-in-out infinite;
+}
+
+@keyframes j-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes j-dash {
+    to {
+        stroke-dashoffset: -18;
+    }
+}
+
+@keyframes j-orbit {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes j-sweep {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes j-bob {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes j-steam {
+    0%,
+    100% {
+        opacity: 0.1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0.4;
+        transform: translateY(-3px);
+    }
+}
+
+/* Don't spin satellites nobody can see. */
+.stage[data-visible='false'] .beacon,
+.stage[data-visible='false'] .link,
+.stage[data-visible='false'] .leoA,
+.stage[data-visible='false'] .leoB,
+.stage[data-visible='false'] .geo,
+.stage[data-visible='false'] .sweep,
+.stage[data-visible='false'] .bob,
+.stage[data-visible='false'] .cursor,
+.stage[data-visible='false'] .steam {
+    animation-play-state: paused;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 768px) {
+    .wrapper {
+        height: 420svh;
+    }
+
+    .heading {
+        top: 5rem;
+        left: 1rem;
+    }
+
+    .captions {
+        left: 1rem;
+        bottom: 3.5rem;
+        width: calc(100vw - 2rem);
+    }
+
+    .caption {
+        padding: 1rem 1.1rem;
+        border-radius: 12px;
+    }
+
+    .kicker {
+        font-size: 0.68rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .title {
+        font-size: 1.35rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .body {
+        font-size: 0.86rem;
+        line-height: 1.5;
+        margin-bottom: 0.8rem;
+    }
+
+    .cta {
+        font-size: 0.85rem;
+    }
+
+    .rail {
+        top: auto;
+        right: auto;
+        bottom: 1.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+    }
+
+    .stage[data-chapter='0'] .railDot:nth-child(1),
+    .stage[data-chapter='1'] .railDot:nth-child(2),
+    .stage[data-chapter='2'] .railDot:nth-child(3),
+    .stage[data-chapter='3'] .railDot:nth-child(4) {
+        height: 6px;
+        width: 26px;
+    }
+
+    .railDot {
+        transition: width var(--transition-medium), background var(--transition-medium);
+    }
+}
+
+/* ---------- reduced motion: a plain static chapter list ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .wrapper {
+        height: auto;
+    }
+
+    .stage {
+        --p: 1 !important;
+        position: relative;
+        height: auto;
+        padding: var(--section-spacing) 0;
+    }
+
+    .stars,
+    .world,
+    .vignette,
+    .rail {
+        display: none;
+    }
+
+    .heading {
+        position: static;
+        max-width: var(--container-width);
+        margin: 0 auto 2rem;
+        padding: 0 1.5rem;
+    }
+
+    .headingNote {
+        display: none;
+    }
+
+    .captions {
+        position: static;
+        width: auto;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.5rem;
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .caption {
+        position: static;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+    }
+
+    .beacon,
+    .link,
+    .leoA,
+    .leoB,
+    .geo,
+    .sweep,
+    .bob,
+    .cursor,
+    .steam {
+        animation: none;
+    }
+}

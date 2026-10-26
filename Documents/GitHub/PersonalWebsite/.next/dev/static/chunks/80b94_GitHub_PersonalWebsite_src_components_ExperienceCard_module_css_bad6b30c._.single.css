@@ -1,0 +1,263 @@
+/* [project]/Documents/GitHub/PersonalWebsite/src/components/ExperienceCard.module.css [app-client] (css) */
+.ExperienceCard-module__dsXe8G__card {
+  border: 1px solid var(--border);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  cursor: pointer;
+  background: #ffffff05;
+  border-radius: 12px;
+  padding: 1.6rem 1.75rem;
+}
+
+.ExperienceCard-module__dsXe8G__card:hover {
+  border-color: var(--primary);
+  background: #ffffff0a;
+  transform: translateX(6px);
+}
+
+.ExperienceCard-module__dsXe8G__cardUpcoming {
+  background: linear-gradient(135deg, #8b5cf612, #ffffff05 60%);
+  border-style: dashed;
+}
+
+.ExperienceCard-module__dsXe8G__upcoming {
+  color: var(--accent);
+  border-color: #8b5cf666;
+}
+
+.ExperienceCard-module__dsXe8G__upcomingDot {
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-glow);
+  animation-name: ExperienceCard-module__dsXe8G__breathe-accent;
+}
+
+@keyframes ExperienceCard-module__dsXe8G__breathe-accent {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px #8b5cf600;
+  }
+}
+
+.ExperienceCard-module__dsXe8G__moreNote {
+  color: var(--secondary-foreground);
+  margin-top: .5rem;
+  font-size: .78rem;
+  font-style: italic;
+  display: block;
+}
+
+.ExperienceCard-module__dsXe8G__header {
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.1rem;
+  display: flex;
+}
+
+.ExperienceCard-module__dsXe8G__logoContainer {
+  border-radius: 12px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  overflow: hidden;
+}
+
+.ExperienceCard-module__dsXe8G__logo {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.ExperienceCard-module__dsXe8G__headerContent {
+  flex-grow: 1;
+}
+
+.ExperienceCard-module__dsXe8G__titleRow {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: .25rem;
+  display: flex;
+}
+
+.ExperienceCard-module__dsXe8G__role {
+  color: var(--foreground);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.ExperienceCard-module__dsXe8G__current {
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  background: #ffffff08;
+  border-radius: 100px;
+  align-items: center;
+  gap: .4rem;
+  padding: .2rem .6rem;
+  font-size: .7rem;
+  font-weight: 600;
+  display: inline-flex;
+}
+
+.ExperienceCard-module__dsXe8G__currentDot {
+  background: var(--primary);
+  width: 6px;
+  height: 6px;
+  box-shadow: 0 0 0 0 var(--primary-glow);
+  border-radius: 50%;
+  animation: 2.4s ease-in-out infinite ExperienceCard-module__dsXe8G__breathe;
+}
+
+@keyframes ExperienceCard-module__dsXe8G__breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--primary-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px #3b82f600;
+  }
+}
+
+.ExperienceCard-module__dsXe8G__highlight {
+  color: var(--foreground);
+  background: linear-gradient(90deg, #3b82f61a, #8b5cf61a);
+  border: 1px solid #8b5cf659;
+  border-radius: 100px;
+  margin-top: .75rem;
+  padding: .35rem .85rem;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ExperienceCard-module__dsXe8G__currentDot, .ExperienceCard-module__dsXe8G__upcomingDot {
+    animation: none;
+  }
+
+  .ExperienceCard-module__dsXe8G__card {
+    transition: none;
+  }
+}
+
+.ExperienceCard-module__dsXe8G__companyRow {
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .5rem 1rem;
+  margin-bottom: .35rem;
+  display: flex;
+}
+
+.ExperienceCard-module__dsXe8G__companyCluster {
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .35rem .5rem;
+  min-width: 0;
+  display: flex;
+}
+
+.ExperienceCard-module__dsXe8G__company {
+  color: var(--primary);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.ExperienceCard-module__dsXe8G__clusterSep {
+  color: var(--secondary-foreground);
+  -webkit-user-select: none;
+  user-select: none;
+  font-weight: 500;
+}
+
+.ExperienceCard-module__dsXe8G__location {
+  color: var(--secondary-foreground);
+  font-size: .95rem;
+}
+
+.ExperienceCard-module__dsXe8G__date {
+  color: var(--secondary-foreground);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: .9rem;
+}
+
+.ExperienceCard-module__dsXe8G__companyRow .ExperienceCard-module__dsXe8G__date {
+  padding-left: .25rem;
+}
+
+.ExperienceCard-module__dsXe8G__websiteLink {
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  padding: .25rem .75rem;
+  font-size: .85rem;
+  text-decoration: none;
+  transition: all .2s;
+}
+
+.ExperienceCard-module__dsXe8G__websiteLink:hover {
+  background: var(--primary);
+  color: var(--background);
+}
+
+.ExperienceCard-module__dsXe8G__description {
+  color: var(--secondary-foreground);
+  font-size: .95rem;
+  list-style: none;
+}
+
+.ExperienceCard-module__dsXe8G__description li {
+  margin-bottom: .45rem;
+  padding-left: 1rem;
+  line-height: 1.6;
+  position: relative;
+}
+
+.ExperienceCard-module__dsXe8G__description li:before {
+  content: "";
+  background: var(--primary);
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  top: .65em;
+  left: 0;
+}
+
+@media (max-width: 600px) {
+  .ExperienceCard-module__dsXe8G__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ExperienceCard-module__dsXe8G__titleRow {
+    gap: .5rem;
+  }
+
+  .ExperienceCard-module__dsXe8G__role {
+    font-size: 1.15rem;
+  }
+
+  .ExperienceCard-module__dsXe8G__companyRow .ExperienceCard-module__dsXe8G__date {
+    padding-left: 0;
+  }
+
+  .ExperienceCard-module__dsXe8G__date {
+    white-space: normal;
+  }
+}
+
+/*# sourceMappingURL=80b94_GitHub_PersonalWebsite_src_components_ExperienceCard_module_css_bad6b30c._.single.css.map*/

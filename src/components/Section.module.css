@@ -3,8 +3,38 @@
     position: relative;
 }
 
+.header {
+    margin-bottom: 3rem;
+}
+
+.header :global(.section-title) {
+    margin-bottom: 0;
+}
+
+.eyebrow {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.6rem;
+}
+
+.lede {
+    max-width: 42rem;
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--secondary-foreground);
+}
+
 @media (max-width: 768px) {
     .section {
         padding: 3rem 0;
+    }
+
+    .header {
+        margin-bottom: 2rem;
     }
 }
