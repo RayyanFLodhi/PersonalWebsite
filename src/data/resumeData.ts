@@ -203,7 +203,7 @@ export const resumeData = {
     {
       scene: "mars",
       kicker: "01 · Mars yard",
-      title: "Driving a Mars rover",
+      title: "Engineering a Mars rover",
       body: "LiDAR depth maps in ROS2 and RViz, robotic-arm control over ROS2 pub/sub, and Arduino firmware for the motors and sensors on uORover. 1st at QRC 2026 and Safest Team at CIRC 2026.",
       cta: { label: "Meet the team", href: "#leadership" }
     },

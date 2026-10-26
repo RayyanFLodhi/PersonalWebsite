@@ -143,7 +143,7 @@ export default function Home() {
 
       <Section
         id="leadership"
-        title="Leadership"
+        title="Leadership & Campus involvement"
         eyebrow="Teams & community"
         lede="The rover team, the developer community, and a decade of speaking and organizing."
         className={styles.darkSection}
